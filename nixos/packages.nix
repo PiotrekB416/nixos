@@ -172,7 +172,7 @@
     nerdfonts
     #(nerdfonts.override { fonts = [ "Noto" ]; })
     zellij
-    eww-wayland
+    eww
     waybar
     dunst
     wl-clipboard cliphist
