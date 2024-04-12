@@ -24,6 +24,9 @@
 
   boot.initrd.luks.devices."luks-14245c41-e4c4-4266-accc-407570116c37".keyFile = "/crypto_keyfile.bin";
   boot.tmp.useTmpfs = true;
+  boot.kernel.sysctl = {
+    "kernel.sysrq" = 1;
+  };
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -144,7 +147,19 @@
   };
 
   # Enable automatic login for the user.
-  services.getty.autologinUser = "piotrek";
+  # services.getty.autologinUser = "piotrek";
+  systemd.services."getty@tty1" = {
+    overrideStrategy = "asDropin";
+    after = ["systemd-login.service"];
+    wantedBy = [ "getty.target" ];
+    serviceConfig = {
+        Type = "idle";
+        ExecStart = [
+        ""
+        ''/bin/bash /home/piotrek/.local/bin/tty1''
+        ];
+    };
+  };
 
   services.gvfs.enable = true;
 

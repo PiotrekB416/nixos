@@ -2,6 +2,7 @@
 {
   imports = [
     ./configs/hyprland.nix
+    ./configs/tty1.nix
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
