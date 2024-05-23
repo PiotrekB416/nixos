@@ -124,17 +124,26 @@
     #media-session.enable = true;
   };
 
-  services.pipewire.wireplumber.configPackages = [
-    (pkgs.writeTextDir
-        "wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-                bluez_monitor.properties = {
-                        --["bluez5.enable-sbc-xq"] = true,
-                        --["bluez5.enable-msbc"] = true,
-                        ["bluez5.enable-hw-volume"] = false,
-                        --["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-                }
-        '')
-  ];
+  #services.pipewire.wireplumber.configPackages = [
+  #  (pkgs.writeTextDir
+  #      "wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
+  #              bluez_monitor.properties = {
+  #                      --["bluez5.enable-sbc-xq"] = true,
+  #                      --["bluez5.enable-msbc"] = true,
+  #                      ["bluez5.enable-hw-volume"] = false,
+  #                      --["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+  #              }
+  #      '')
+  #];
+
+  services.pipewire.wireplumber.extraConfig = {
+    "monitor.bluez.properties" = {
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = false;
+        "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+    };
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
