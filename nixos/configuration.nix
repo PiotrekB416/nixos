@@ -80,6 +80,9 @@
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
   services.samba.openFirewall = true;
+  networking.extraHosts = ''
+    192.168.122.155 windows.local
+  '';
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.displayManager.startx.enable = true;
