@@ -96,7 +96,63 @@
   #systemd.services."getty@tty1".enable = false;
   #systemd.services."autovt@tty1".enable = false;
 
+  programs.nix-ld = {
+    enable = true;
 
+  # Sets up all the libraries to load
+    libraries = with pkgs; [
+      alsa-lib
+      at-spi2-atk
+      at-spi2-core
+      atk
+      cairo
+      cups
+      curl
+      dbus
+      expat
+      fontconfig
+      freetype
+      fuse3
+      gdk-pixbuf
+      glib
+      gtk3
+      icu
+      libGL
+      libappindicator-gtk3
+      libdrm
+      libglvnd
+      libnotify
+      libpulseaudio
+      libunwind
+      libusb1
+      libuuid
+      libxkbcommon
+      mesa
+      nspr
+      nss
+      openssl
+      pango
+      pipewire
+      stdenv.cc.cc
+      systemd
+      vulkan-loader
+      xorg.libX11
+      xorg.libXScrnSaver
+      xorg.libXcomposite
+      xorg.libXcursor
+      xorg.libXdamage
+      xorg.libXext
+      xorg.libXfixes
+      xorg.libXi
+      xorg.libXrandr
+      xorg.libXrender
+      xorg.libXtst
+      xorg.libxcb
+      xorg.libxkbfile
+      xorg.libxshmfence
+      zlib
+    ];
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -125,7 +181,7 @@
     pamixer
     dolphin
     starship
-    jdk20
+    jdk21
     wofi
     nasm
 
@@ -136,9 +192,6 @@
     clang-tools
     gnumake
     rustup
-    jetbrains.idea-ultimate
-    jetbrains.rider
-    jetbrains.pycharm-professional
     github-desktop
     github-cli
     dotnet-sdk_8
@@ -172,5 +225,6 @@
     grim slurp swappy
     haskellPackages.kmonad
     gamescope
+    appimage-run
   ];
 }

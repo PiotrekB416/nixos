@@ -146,7 +146,7 @@
 
     #windowrulev2 = unset,class:^(firefox)$
     windowrulev2 = float,class:^(firefox)$,title:^(Picture-in-Picture)$
-    windowrulev2 = size 7% 7%,class:^(firefox)$,title:^(Picture-in-Picture)$,floating:1
+    windowrulev2 = keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$,floating:1
     windowrulev2 = suppressevent fullscreen,class:^(firefox)$,title:^(Picture-in-Picture)$
     windowrulev2 = pin,class:^(firefox)$,title:^(Picture-in-Picture)$
 
