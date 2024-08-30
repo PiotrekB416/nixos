@@ -8,7 +8,7 @@
 
 let
   betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
-  inherit (import ../hosts/${host}/variables.nix) clock24h;
+  inherit (import ../hosts/${host}/variables.nix) clock24h terminal;
 in
 with lib;
 {
@@ -62,15 +62,18 @@ with lib;
                 interval = 5;
                 format = " {}%";
                 tooltip = true;
+                on-click = "${terminal} -e btop";
             };
             "cpu" = {
                 interval = 5;
                 format = " {usage:2}%";
                 tooltip = true;
+                on-click = "${terminal} -e btop";
             };
             "disk" = {
                 format = " {free}";
                 tooltip = true;
+                on-click = "${terminal} -e btop";
             };
             "network" = {
                 format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
@@ -133,25 +136,6 @@ with lib;
                 };
                 tooltip = "true";
             };
-            "custom/notification" = {
-                tooltip = false;
-                format = "{icon} {}";
-                format-icons = {
-                    notification = "<span foreground='red'><sup></sup></span>";
-                    none = "";
-                    dnd-notification = "<span foreground='red'><sup></sup></span>";
-                    dnd-none = "";
-                    inhibited-notification = "<span foreground='red'><sup></sup></span>";
-                    inhibited-none = "";
-                    dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
-                    dnd-inhibited-none = "";
-                };
-                return-type = "json";
-                exec-if = "which swaync-client";
-                exec = "swaync-client -swb";
-                on-click = "sleep 0.1 && task-waybar";
-                escape = true;
-            };
             "battery" = {
                 states = {
                     warning = 30;
@@ -190,7 +174,7 @@ with lib;
                 margin: 0px 3px;
                 border-radius: 16px;
                 color: #${config.stylix.base16Scheme.base00};
-                background: linear-gradient(45deg, #${config.stylix.base16Scheme.base08}, #${config.stylix.base16Scheme.base0D});
+                background: #${config.stylix.base16Scheme.base0D};
                 opacity: 0.5;
                 transition: ${betterTransition};
             }
@@ -200,7 +184,7 @@ with lib;
                 margin: 0px 3px;
                 border-radius: 16px;
                 color: #${config.stylix.base16Scheme.base00};
-                background: linear-gradient(45deg, #${config.stylix.base16Scheme.base08}, #${config.stylix.base16Scheme.base0D});
+                background: #${config.stylix.base16Scheme.base0D};
                 transition: ${betterTransition};
                 opacity: 1.0;
                 min-width: 40px;
@@ -209,17 +193,17 @@ with lib;
                 font-weight: bold;
                 border-radius: 16px;
                 color: #${config.stylix.base16Scheme.base00};
-                background: linear-gradient(45deg, #${config.stylix.base16Scheme.base08}, #${config.stylix.base16Scheme.base0D});
+                background: #${config.stylix.base16Scheme.base0D};
                 opacity: 0.8;
                 transition: ${betterTransition};
             }
             tooltip {
                 background: #${config.stylix.base16Scheme.base00};
-                border: 1px solid #${config.stylix.base16Scheme.base08};
+                border: 1px solid #${config.stylix.base16Scheme.base06};
                 border-radius: 12px;
             }
             tooltip label {
-              color: #${config.stylix.base16Scheme.base08};
+              color: #${config.stylix.base16Scheme.base06};
             }
             #window, #pulseaudio, #cpu, #memory, #idle_inhibitor {
                 font-weight: bold;
@@ -231,7 +215,7 @@ with lib;
                 border-radius: 24px 10px 24px 10px;
             }
             #custom-startmenu {
-                color: #${config.stylix.base16Scheme.base0B};
+                color: #${config.stylix.base16Scheme.base0C};
                 background: #${config.stylix.base16Scheme.base02};
                 font-size: 28px;
                 margin: 0px;
@@ -251,7 +235,7 @@ with lib;
             #clock {
                 font-weight: bold;
                 color: #0D0E15;
-                background: linear-gradient(90deg, #${config.stylix.base16Scheme.base0E}, #${config.stylix.base16Scheme.base0C});
+                background: #${config.stylix.base16Scheme.base0D};
                 margin: 0px;
                 padding: 0px 15px 0px 30px;
                 border-radius: 0px 0px 0px 40px;

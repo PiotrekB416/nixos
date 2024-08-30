@@ -8,12 +8,11 @@ in
 {
     programs.neovim = {
         enable = true;
-        defaultEnable = true;
+        defaultEditor = true;
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;
         withNodeJs = true;
-
-        extraLuaConfig = pkgs.lib.fileContents ./nvim/init.lua;
+    	extraLuaConfig = ''require('theprimeagen');'';
     };
 }

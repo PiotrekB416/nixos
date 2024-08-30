@@ -42,42 +42,44 @@ in
 
       stylix = {
     enable = true;
-    image = "../../config/wallpapers/beautifulmountainscape.jpg";
-    # base16Scheme = {
-    #   base00 = "232136";
-    #   base01 = "2a273f";
-    #   base02 = "393552";
-    #   base03 = "6e6a86";
-    #   base04 = "908caa";
-    #   base05 = "e0def4";
-    #   base06 = "e0def4";
-    #   base07 = "56526e";
-    #   base08 = "eb6f92";
-    #   base09 = "f6c177";
-    #   base0A = "ea9a97";
-    #   base0B = "3e8fb0";
-    #   base0C = "9ccfd8";
-    #   base0D = "c4a7e7";
-    #   base0E = "f6c177";
-    #   base0F = "56526e";
-    # };
+    image = ../../config/wallpapers/wallpaper-0.jpg;
+    base16Scheme = {
+base00= "000000";
+base01= "303030";
+base02= "505050";
+base03= "b0b0b0";
+base04= "d0d0d0";
+base05= "e0e0e0";
+base06= "f5f5f5";
+base07= "ffffff";
+base08= "f2201f";
+base09= "fda331";
+base0A= "fffd00";
+base0B= "23fd00";
+base0C= "14ffff";
+base0D= "1a8fff";
+base0E= "fd28ff";
+base0F= "be643c";
+    };
     polarity = "dark";
-    opacity.terminal = 0.8;
+    opacity.terminal = 0.75;
     cursor.package = pkgs.bibata-cursors;
     cursor.name = "Bibata-Modern-Ice";
     cursor.size = 24;
     fonts = {
       monospace = {
+        #package = pkgs.nerdfonts.override { fonts = [ "Noto" ]; };
+        #name = "NotoMono Nerd Font Mono";
         package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
         name = "JetBrainsMono Nerd Font Mono";
       };
       sansSerif = {
-        package = pkgs.montserrat;
-        name = "Montserrat";
+        package = pkgs.noto-fonts;
+        name = "NotoSans";
       };
       serif = {
-        package = pkgs.montserrat;
-        name = "Montserrat";
+        package = pkgs.noto-fonts;
+        name = "NotoSerif";
       };
       sizes = {
         applications = 12;
@@ -355,7 +357,9 @@ in
                 '';
             };
         })))
-        mpv
+        zellij
+        docker-compose
+        ripgrep
     ];
 
     services = {
@@ -380,7 +384,7 @@ in
         xserver = {
             enable = true;
             displayManager.startx.enable = true;
-            desktopManager.plasma5.enable = true;
+            #desktopManager.plasma5.enable = true;
             xkb = {
                 layout = "${keyboardLayout}";
                 variant = "";
@@ -391,7 +395,8 @@ in
         fstrim.enable = true;
         gvfs.enable = true;
         openssh.enable = true;
-        flatpak.enable = false;
+        flatpak.enable = true;
+        playerctld.enable = true;
         gnome.gnome-keyring.enable = true;
         blueman.enable = true;
         avahi = {

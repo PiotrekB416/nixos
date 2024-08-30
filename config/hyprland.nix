@@ -127,14 +127,14 @@ with lib;
 #           }
             animations {
                 enabled = yes
-                bezier = wind, 0.05, 0.9, 0.1, 1.05
-                bezier = winIn, 0.1, 1.1, 0.1, 1.1
+                bezier = wind, 0.05, 0.9, 0.1, 1
+                bezier = winIn, 0.1, 1, 0.1, 1
                 bezier = winOut, 0.3, -0.3, 0, 1
                 bezier = liner, 1, 1, 1, 1
-                animation = windows, 1, 6, wind, slide
-                animation = windowsIn, 1, 6, winIn, slide
-                animation = windowsOut, 1, 5, winOut, slide
-                animation = windowsMove, 1, 5, wind, slide
+                animation = windows, 1, 6, wind
+                animation = windowsIn, 1, 6, winIn
+                animation = windowsOut, 1, 5, winOut
+                animation = windowsMove, 1, 5, wind
                 animation = border, 1, 1, liner
                 animation = fade, 1, 10, default
                 animation = workspaces, 1, 5, wind
@@ -177,7 +177,8 @@ with lib;
             bind = ${modifier}, F, exec, GDK_DPI_SCALE=1 ${browser} -P piotrek
             bind = ${modifier}, b, fullscreen, 1
             bind = ${modifier} SHIFT, b, fullscreen
-            bind = ${modifier} SHIFT, s, exec, grim -g "$(slurp)" - | swappy -f -
+            bind = ${modifier},code:60,exec,emopicker9000
+            bind = ${modifier} SHIFT, s, exec, screenshootin
             bind = ${modifier}, space, exec, playerctl play-pause
             #memes - the dna of the soul
             #bind = ${modifier} SHIFT ALT CTRL, L, exec, xdg-open https://linkedin.com

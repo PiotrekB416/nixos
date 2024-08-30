@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   username,
   host,
@@ -11,6 +12,7 @@ in
     imports = [
         ../../config/hyprland.nix
         #../../config/fastfetch
+        ../../config/emoji.nix
         ../../config/neovim.nix
         ../../config/rofi/rofi.nix
         ../../config/rofi/config-emoji.nix
@@ -24,7 +26,7 @@ in
     home.homeDirectory = "/home/${username}";
     home.stateVersion = "23.05";
     home.file."Pictures/Wallpapers" = {
-        source = ../..config/Wallpapers;
+        source = ../../config/wallpapers;
         recursive = true;
     };
 
@@ -44,7 +46,8 @@ in
     stylix.targets.waybar.enable = false;
     stylix.targets.rofi.enable = false;
     stylix.targets.hyprland.enable = false;
-
+    stylix.targets.neovim.enable = false;
+    stylix.targets.btop.enable = false;
 
     programs.git = {
         enable = true;
@@ -114,42 +117,45 @@ in
         btop = {
             enable = true;
             settings = {
-                vim-keys = true;
+                color_theme = "TTY";
+                theme_background = false;
+                vim_keys = true;
+                update_ms = 1000;
             };
         };
         alacritty = {
             enable = true;
             settings = {
-                colors = {
-                    bright = {
-                        black = "#767676";
-                        blue = "#1a8fff";
-                        cyan = "#14ffff";
-                        green = "#23fd00";
-                        magenta = "#fd28ff";
-                        red = "#f2201f";
-                        white = "#ffffff";
-                        yellow = "#fffd00";
-                    };
-                    cursor = {
-                        cursor = "#ffffff";
-                        text = "#aaaaaa";
-                    };
-                    normal = {
-                        black = "#000000";
-                        blue = "#0d73cc";
-                        cyan = "#0dcdcd";
-                        green = "#19cb00";
-                        magenta = "#cb1ed1";
-                        red = "#cc0403";
-                        white = "#dddddd";
-                        yellow = "#cecb00";
-                    };
-                    primary = {
-                        background = "#000000";
-                        foreground = "#dddddd";
-                    };
-                };
+#               colors = {
+#                   bright = {
+#                       black = "#767676";
+#                       blue = "#1a8fff";
+#                       cyan = "#14ffff";
+#                       green = "#23fd00";
+#                       magenta = "#fd28ff";
+#                       red = "#f2201f";
+#                       white = "#ffffff";
+#                       yellow = "#fffd00";
+#                   };
+#                   cursor = {
+#                       cursor = "#ffffff";
+#                       text = "#aaaaaa";
+#                   };
+#                   normal = {
+#                       black = "#000000";
+#                       blue = "#0d73cc";
+#                       cyan = "#0dcdcd";
+#                       green = "#19cb00";
+#                       magenta = "#cb1ed1";
+#                       red = "#cc0403";
+#                       white = "#dddddd";
+#                       yellow = "#cecb00";
+#                   };
+#                   primary = {
+#                       background = "#000000";
+#                       foreground = "#dddddd";
+#                   };
+#               };
                 window.opacity = 0.75;
                 font.size = 15;
             };
@@ -157,12 +163,35 @@ in
         zsh = {
             enable = true;
             enableCompletion = true;
-            syntaxHighlighting = true;
+            syntaxHighlighting.enable = true;
+            autosuggestion.enable = true;
             shellAliases = {
                 exa = "eza";
                 ".." = "cd ..";
             };
+            history = {
+                size = 10000;
+                path = "${config.xdg.dataHome}/zsh/history";
+            };
+            autocd = true;
+
+            initExtra = ''bindkey "''${key[Up]}" up-line-or-search'';
         };
         hyprlock.enable = true;
+        mpv = {
+            enable = true;
+            scripts = with pkgs.mpvScripts; [
+                mpris
+            ];
+        };
     };
+
+    home.packages = [
+        (import ../../scripts/emopicker9000.nix { inherit pkgs; })
+        (import ../../scripts/task-waybar.nix { inherit pkgs; })
+#        (import ../../scripts/web-search.nix { inherit pkgs; })
+        (import ../../scripts/rofi-launcher.nix { inherit pkgs; })
+        (import ../../scripts/screenshootin.nix { inherit pkgs; })
+    ];
+
 }
