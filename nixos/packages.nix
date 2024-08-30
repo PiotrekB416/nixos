@@ -60,6 +60,24 @@
   #      ];
   #  };
   #};
+# virtualisation.oci-containers = {
+#    containers = {
+#       stremio = {
+#           autoStart = true;
+#           image = "stremio/server:latest";
+#           ports = [
+#               "11470:11470"
+#               "12470:12470"
+#           ];
+#           cmd = ["bash"];
+
+#           environment = {
+#               NO_CORS="1";
+#           };
+
+#       };
+#    };
+# };
   #systemd.services.podman-pihole.serviceConfig.TimeoutStopSec = lib.mkForce 5;
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -78,7 +96,7 @@
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
-  hardware.opengl.driSupport32Bit = true; # Enables support for 32bit libs that steam uses
+  hardware.graphics.enable32Bit = true; # Enables support for 32bit libs that steam uses
   #fonts.packages = with pkgs; [
   #  noto-nerdfont
   #]
@@ -166,6 +184,7 @@
     unzip
     networkmanagerapplet
     home-manager
+    playerctl
 
     #hyprland
     swww
@@ -197,15 +216,15 @@
     dotnet-sdk_8
     python311Full
     python311Packages.pip
-    ((pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: rec {
-                src = (builtins.fetchTarball {
-                  url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
-                  sha256 = "063y5ava6lyhg9m6pf8lgk7fbqdc8l33yj50r1zlb47mfc690hbc";
-                });
-                version = "latest";
+#   ((pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: rec {
+#               src = (builtins.fetchTarball {
+#                 url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
+#                 sha256 = "063y5ava6lyhg9m6pf8lgk7fbqdc8l33yj50r1zlb47mfc690hbc";
+#               });
+#               version = "latest";
 
-                buildInputs = oldAttrs.buildInputs ++ [ pkgs.krb5 ];
-              }))
+#               buildInputs = oldAttrs.buildInputs ++ [ pkgs.krb5 ];
+#             }))
 
     #andoid
     android-studio
@@ -226,5 +245,15 @@
     haskellPackages.kmonad
     gamescope
     appimage-run
+    ((stremio.overrideAttrs (prev: rec {
+        server = fetchurl {
+            url = "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v${prev.version}/server.js";
+            sha256 = "sha256-NdiVNxZAqfmqhv0IZnM1Fbw2ERlVbzmEBsdmLDWrxFc=";
+            postFetch = ''
+                substituteInPlace $out --replace "/usr/bin/mpv" "/run/current-system/sw/bin/mpv"
+            '';
+        };
+    })))
+    mpv
   ];
 }

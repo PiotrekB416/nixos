@@ -50,7 +50,7 @@
   #nixpkgs.config.packageOverrides = pkgs: {
   #  vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   #};
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       rocmPackages.clr.icd
@@ -58,7 +58,6 @@
       rocm-opencl-runtime
       amdvlk
     ];
-    driSupport = true;
   };
 
 
@@ -114,6 +113,21 @@
 		}
 	'')
   ];
+
+  hardware.printers = {
+    ensurePrinters = [
+        {
+            name = "Samsung_CLP-320";
+            location = "Home";
+            deviceUri = "http://192.168.1.125:631/printers/Samsung_CLP-320_Series";
+            model = "drv:///sample.drv/generic.ppd";
+            ppdOptions = {
+                PageSize = "A4";
+            };
+        }
+    ];
+    ensureDefaultPrinter = "Samsung_CLP-320";
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
