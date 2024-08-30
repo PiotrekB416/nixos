@@ -351,9 +351,9 @@ base0F= "be643c";
         ((stremio.overrideAttrs (prev: rec {
             server = fetchurl {
                 url = "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v${prev.version}/server.js";
-                sha256 = "sha256-NdiVNxZAqfmqhv0IZnM1Fbw2ERlVbzmEBsdmLDWrxFc=";
+                sha256 = "sha256-7XmbXW50a6LV0724bxJsT3f5+9d44anoh1l1aIW98us=";
                 postFetch = ''
-                    substituteInPlace $out --replace "/usr/bin/mpv" "/run/current-system/sw/bin/mpv"
+                    substituteInPlace $out --replace-fail "/usr/bin/mpv" "/etc/profiles/per-user/piotrek/bin/mpv"
                 '';
             };
         })))
