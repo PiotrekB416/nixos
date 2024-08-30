@@ -49,14 +49,15 @@
         },
         "mpris": {
           "image-size": 96,
-          "image-radius": 7
+          "image-radius": 7,
+          "blacklist": ["playerctld"]
         },
         "volume": {
           "label": "󰕾"
         },
         "backlight": {
           "label": "󰃟"
-        },
+        }
       }
     }
   '';
