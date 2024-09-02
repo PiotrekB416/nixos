@@ -358,6 +358,7 @@ base0F= "be643c";
                 '';
             };
         })))
+        zellij
         docker-compose
         ripgrep
     ];
@@ -403,6 +404,12 @@ base0F= "be643c";
             enable = true;
             nssmdns4 = true;
             openFirewall = true;
+        };
+        openvpn.servers = {
+            homeVPN = {
+                config = ''config /home/piotrek/.openvpn/home.ovpn'';
+                autoStart = false;
+            };
         };
     };
     systemd.services.flatpak-repo = {

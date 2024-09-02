@@ -357,6 +357,7 @@ base0F= "be643c";
                 '';
             };
         })))
+        zellij
         docker-compose
         ripgrep
     ];

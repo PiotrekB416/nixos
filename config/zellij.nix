@@ -1,6 +1,98 @@
 { pkgs, ... }: {
-    programs.zellij.enable = true;
-    home.file.".config/zellij/config.kdl".text = ''
+    home.file = {
+        ".config/zellij/layouts/programming.kdl".text = ''
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+    tab {
+        pane split_direction="vertical" {
+            pane size="66%" {
+                pane stacked=true {
+                    pane
+                    pane expanded=true {
+                        command "nvim"
+                        args "."
+                    }
+                }
+            }
+            pane {
+                pane size="35%" split_direction="vertical" {
+                    pane size="12%" {
+
+                    }
+                    pane
+                }
+                pane
+            }
+        }
+
+    }
+}
+    '';
+
+    ".config/zellij/layouts/layout.kdl".text = ''
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+    swap_tiled_layout name="programming" {
+        tab exact_panes=4 {
+            pane split_direction="vertical" {
+                pane size="66%"
+                pane
+            }
+        }
+    }
+    swap_tiled_layout name="programming" {
+        tab exact_panes=5 {
+            pane split_direction="vertical" {
+                pane size="66%"
+                pane {
+                    pane size="35%"
+                    pane
+                }
+            }
+        }
+    }
+    swap_tiled_layout name="normal" {
+        tab {
+            pane split_direction="vertical" {
+                pane {
+                    pane
+                        pane
+                }
+                pane {
+                    pane
+                        pane
+                }
+            }
+        }
+    }
+    swap_tiled_layout name="small" {
+        tab {
+            pane
+            pane
+            pane
+            pane
+        }
+    }
+}
+    '';
+
+    ".config/zellij/config.kdl".text = ''
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds {
     normal {
@@ -317,96 +409,5 @@ scrollback_editor "/usr/bin/nvim"
 //
 // theme_dir "/path/to/my/theme_dir"
     '';
-
-    home.file.".config/zellij/layouts/programing.kdl".text = ''
-layout {
-    default_tab_template {
-        pane size=1 borderless=true {
-            plugin location="zellij:tab-bar"
-        }
-        children
-        pane size=2 borderless=true {
-            plugin location="zellij:status-bar"
-        }
-    }
-    tab {
-        pane split_direction="vertical" {
-            pane size="66%" {
-                pane stacked=true {
-                    pane
-                    pane expanded=true {
-                        command "nvim"
-                        args "."
-                    }
-                }
-            }
-            pane {
-                pane size="35%" split_direction="vertical" {
-                    pane size="12%" {
-
-                    }
-                    pane
-                }
-                pane
-            }
-        }
-
-    }
-}
-    '';
-
-    home.file.".config/zellij/layouts/layout.kdl".text = ''
-layout {
-    default_tab_template {
-        pane size=1 borderless=true {
-            plugin location="zellij:tab-bar"
-        }
-        children
-        pane size=2 borderless=true {
-            plugin location="zellij:status-bar"
-        }
-    }
-    swap_tiled_layout name="programming" {
-        tab exact_panes=4 {
-            pane split_direction="vertical" {
-                pane size="66%"
-                pane
-            }
-        }
-    }
-    swap_tiled_layout name="programming" {
-        tab exact_panes=5 {
-            pane split_direction="vertical" {
-                pane size="66%"
-                pane {
-                    pane size="35%"
-                    pane
-                }
-            }
-        }
-    }
-    swap_tiled_layout name="normal" {
-        tab {
-            pane split_direction="vertical" {
-                pane {
-                    pane
-                        pane
-                }
-                pane {
-                    pane
-                        pane
-                }
-            }
-        }
-    }
-    swap_tiled_layout name="small" {
-        tab {
-            pane
-            pane
-            pane
-            pane
-        }
-    }
-}
-    '';
+    };
 }
