@@ -29,7 +29,7 @@
             inherit host;
           };
           modules = [
-            ./hosts/${host}/config.nix
+            ./config.nix
             inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
@@ -41,7 +41,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
-              home-manager.users.${username} = import ./hosts/${host}/home.nix;
+              home-manager.users.${username} = import ./home.nix;
             }
           ];
         };

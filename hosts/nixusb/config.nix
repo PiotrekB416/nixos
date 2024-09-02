@@ -4,6 +4,8 @@
     host,
     username,
     options,
+    modulesPath,
+    system,
     ...
 }:
 let
@@ -11,7 +13,7 @@ let
 in
 {
     imports = [
-        ./hardware.nix
+	./hardware.nix
         ./users.nix
         ../../modules/amd-drivers.nix
         ../../modules/nvidia-drivers.nix
@@ -39,7 +41,7 @@ in
             magicOrExtension = ''\x7fELF....AI\x02'';
         };
     };
-
+nixpkgs.hostPlatform = system;
       stylix = {
     enable = true;
     image = ../../config/wallpapers/wallpaper-0.jpg;
@@ -91,7 +93,7 @@ base0F= "be643c";
   };
 
     # Extra Module Options
-    drivers.amdgpu.enable = true;
+    drivers.amdgpu.enable = false;
     drivers.nvidia.enable = false;
     drivers.nvidia-prime = {
         enable = false;
@@ -277,7 +279,6 @@ base0F= "be643c";
             noto-fonts-emoji
             noto-fonts-cjk
             font-awesome
-            symbola
             material-icons
         ];
     };
@@ -313,8 +314,8 @@ base0F= "be643c";
         rofi
         swaynotificationcenter
 
+        starship
         swww
-        nerdfonts
         eww
         dunst
         wl-clipboard
