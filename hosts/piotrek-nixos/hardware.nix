@@ -30,7 +30,7 @@
     };
 
   fileSystems."/home/piotrek/Games" =
-    { device = "/dev/disk/by-id/ata-SSDPR-CX400-512-G2_GZ6059288-part1";
+    { device = "/dev/disk/by-uuid/155ffdae-419c-469f-89aa-eb29b5aaf734";
       fsType = "btrfs";
       options = [ "nofail" ];
     };
