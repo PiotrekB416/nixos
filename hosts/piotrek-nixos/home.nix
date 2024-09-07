@@ -3,6 +3,8 @@
   pkgs,
   username,
   host,
+  inputs,
+  home,
   ...
 }:
 let
@@ -13,7 +15,11 @@ in
         ../../config/hyprland.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
-        ../../config/neovim.nix
+        ({config, ...}: let
+            undodir = "${config.home.homeDirectory}/.vim/undodir";
+        in import ../../config/nixvim {
+            inherit undodir pkgs config inputs;
+        })
         ../../config/rofi/rofi.nix
         ../../config/rofi/config-emoji.nix
         ../../config/rofi/config-long.nix
@@ -156,8 +162,8 @@ in
 #                       foreground = "#dddddd";
 #                   };
 #               };
-                window.opacity = 0.75;
-                font.size = 15;
+#                window.opacity = 0.75;
+#                font.size = 15;
             };
         };
         zsh = {

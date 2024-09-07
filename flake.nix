@@ -10,6 +10,10 @@
       url = "github:VonHeikemen/fine-cmdline.nvim";
       flake = false;
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -41,7 +45,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
-              home-manager.users.${username} = import ./hosts/${host}/home.nix;
+              home-manager.users.${username}.imports = [
+                ./hosts/${host}/home.nix
+                inputs.nixvim.homeManagerModules.nixvim
+              ];
             }
           ];
         };

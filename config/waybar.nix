@@ -149,8 +149,7 @@ with lib;
                 tooltip = false;
             };
         }];
-        style = concatStrings [
-          ''
+        style = ''
             * {
                 font-family: JetBrainsMono Nerd Font Mono;
                 font-size: 16px;
@@ -162,8 +161,8 @@ with lib;
                 background: rgba(0,0,0,0);
             }
             #workspaces {
-                color: #${config.stylix.base16Scheme.base00};
-                background: #${config.stylix.base16Scheme.base01};
+                color: #000000;
+                background: #303030;
                 margin: 4px 4px;
                 padding: 5px 5px;
                 border-radius: 16px;
@@ -173,8 +172,8 @@ with lib;
                 padding: 0px 5px;
                 margin: 0px 3px;
                 border-radius: 16px;
-                color: #${config.stylix.base16Scheme.base00};
-                background: #${config.stylix.base16Scheme.base0D};
+                color: #000000;
+                background: #1a8fff;
                 opacity: 0.5;
                 transition: ${betterTransition};
             }
@@ -183,8 +182,8 @@ with lib;
                 padding: 0px 5px;
                 margin: 0px 3px;
                 border-radius: 16px;
-                color: #${config.stylix.base16Scheme.base00};
-                background: #${config.stylix.base16Scheme.base0D};
+                color: #000000;
+                background: #1a8fff;
                 transition: ${betterTransition};
                 opacity: 1.0;
                 min-width: 40px;
@@ -192,31 +191,31 @@ with lib;
             #workspaces button:hover {
                 font-weight: bold;
                 border-radius: 16px;
-                color: #${config.stylix.base16Scheme.base00};
-                background: #${config.stylix.base16Scheme.base0D};
+                color: #000000;
+                background: #1a8fff;
                 opacity: 0.8;
                 transition: ${betterTransition};
             }
             tooltip {
-                background: #${config.stylix.base16Scheme.base00};
-                border: 1px solid #${config.stylix.base16Scheme.base06};
+                background: #000000;
+                border: 1px solid #f5f5f5;
                 border-radius: 12px;
             }
             tooltip label {
-              color: #${config.stylix.base16Scheme.base06};
+              color: #f5f5f5;
             }
             #window, #pulseaudio, #cpu, #memory, #idle_inhibitor {
                 font-weight: bold;
                 margin: 4px 0px;
                 margin-left: 7px;
                 padding: 0px 18px;
-                background: #${config.stylix.base16Scheme.base04};
-                color: #${config.stylix.base16Scheme.base00};
+                background: #d0d0d0;
+                color: #000000;
                 border-radius: 24px 10px 24px 10px;
             }
             #custom-startmenu {
-                color: #${config.stylix.base16Scheme.base0C};
-                background: #${config.stylix.base16Scheme.base02};
+                color: #14ffff;
+                background: #505050;
                 font-size: 28px;
                 margin: 0px;
                 padding: 0px 30px 0px 15px;
@@ -225,8 +224,8 @@ with lib;
             #custom-hyprbindings, #network, #battery,
             #custom-notification, #tray, #custom-exit {
                 font-weight: bold;
-                background: #${config.stylix.base16Scheme.base0F};
-                color: #${config.stylix.base16Scheme.base00};
+                background: #be643c;
+                color: #000000;
                 margin: 4px 0px;
                 margin-right: 7px;
                 border-radius: 10px 24px 10px 24px;
@@ -235,12 +234,11 @@ with lib;
             #clock {
                 font-weight: bold;
                 color: #0D0E15;
-                background: #${config.stylix.base16Scheme.base0D};
+                background: #1a8fff;
                 margin: 0px;
                 padding: 0px 15px 0px 30px;
                 border-radius: 0px 0px 0px 40px;
             }
-          ''
-        ];
+          '';
     };
 }

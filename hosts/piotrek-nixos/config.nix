@@ -43,26 +43,9 @@ in
       stylix = {
     enable = true;
     image = ../../config/wallpapers/wallpaper-0.jpg;
-    base16Scheme = {
-base00= "000000";
-base01= "303030";
-base02= "505050";
-base03= "b0b0b0";
-base04= "d0d0d0";
-base05= "e0e0e0";
-base06= "f5f5f5";
-base07= "ffffff";
-base08= "f2201f";
-base09= "fda331";
-base0A= "fffd00";
-base0B= "23fd00";
-base0C= "14ffff";
-base0D= "1a8fff";
-base0E= "fd28ff";
-base0F= "be643c";
-    };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     polarity = "dark";
-    opacity.terminal = 0.75;
+    opacity.terminal = 0.9;
     cursor.package = pkgs.bibata-cursors;
     cursor.name = "Bibata-Modern-Ice";
     cursor.size = 24;
@@ -277,7 +260,6 @@ base0F= "be643c";
             noto-fonts-emoji
             noto-fonts-cjk
             font-awesome
-            symbola
             material-icons
         ];
     };
