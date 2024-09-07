@@ -347,7 +347,7 @@ nixpkgs.hostPlatform = system;
     ];
 
     services = {
-        getty.autologinUser = username;
+        #getty.autologinUser = username;
         pipewire = {
             enable = true;
             alsa.enable = true;
