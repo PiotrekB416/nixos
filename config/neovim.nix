@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, ... }:
 let
   finecmdline = pkgs.vimUtils.buildVimPlugin {
     name = "fine-cmdline";
@@ -13,6 +13,7 @@ in
         vimAlias = true;
         vimdiffAlias = true;
         withNodeJs = true;
-    	extraLuaConfig = ''require('theprimeagen');'';
+    	extraLuaConfig = ''require('theprimeagen')'';
     };
+
 }

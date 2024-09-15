@@ -40,38 +40,38 @@ in
         };
     };
 
-      stylix = {
-    enable = true;
-    image = ../../config/wallpapers/wallpaper-0.jpg;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-    polarity = "dark";
-    opacity.terminal = 0.9;
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
-    cursor.size = 24;
-    fonts = {
-      monospace = {
+    stylix = {
+    	enable = true;
+    	image = ../../config/wallpapers/wallpaper-0.jpg;
+    	base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    	polarity = "dark";
+    	opacity.terminal = 0.9;
+    	cursor.package = pkgs.bibata-cursors;
+    	cursor.name = "Bibata-Modern-Ice";
+    	cursor.size = 24;
+    	fonts = {
+      	    monospace = {
         #package = pkgs.nerdfonts.override { fonts = [ "Noto" ]; };
         #name = "NotoMono Nerd Font Mono";
-        package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-        name = "JetBrainsMono Nerd Font Mono";
-      };
-      sansSerif = {
-        package = pkgs.noto-fonts;
-        name = "NotoSans";
-      };
-      serif = {
-        package = pkgs.noto-fonts;
-        name = "NotoSerif";
-      };
-      sizes = {
-        applications = 12;
-        terminal = 15;
-        desktop = 11;
-        popups = 12;
-      };
+        	package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+        	name = "JetBrainsMono Nerd Font Mono";
+      	    };
+            sansSerif = {
+        	package = pkgs.noto-fonts;
+        	name = "NotoSans";
+            };
+      	    serif = {
+        	package = pkgs.noto-fonts;
+        	name = "NotoSerif";
+      	    };
+      	    sizes = {
+        	applications = 12;
+        	terminal = 15;
+        	desktop = 11;
+        	popups = 12;
+	    };
+    	};
     };
-  };
 
     # Extra Module Options
     drivers.amdgpu.enable = true;
@@ -342,6 +342,7 @@ in
         zellij
         docker-compose
         ripgrep
+	    wineWow64Packages.full winetricks
     ];
 
     services = {

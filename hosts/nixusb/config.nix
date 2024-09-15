@@ -344,6 +344,7 @@ nixpkgs.hostPlatform = system;
         zellij
         docker-compose
         ripgrep
+        wineWow64Packages.full winetricks
     ];
 
     services = {
