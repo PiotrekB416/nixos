@@ -15,11 +15,12 @@ in
         ../../config/hyprland.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
-        ({config, ...}: let
-            undodir = "${config.home.homeDirectory}/.vim/undodir";
-        in import ../../config/nixvim {
-            inherit undodir pkgs config inputs;
-        })
+#        ({config, ...}: let
+#            undodir = "${config.home.homeDirectory}/.vim/undodir";
+#        in import ../../config/nixvim {
+#            inherit undodir pkgs config inputs;
+#        })
+#        ../../config/neovim.nix
         ../../config/rofi/rofi.nix
         ../../config/rofi/config-emoji.nix
         ../../config/rofi/config-long.nix
@@ -119,6 +120,12 @@ in
     };
 
     programs = {
+        neovim = {
+            enable = true;
+            viAlias = true;
+            vimAlias = true;
+            defaultEditor = true;
+        };
         gh.enable = true;
         btop = {
             enable = true;
@@ -173,6 +180,8 @@ in
             autosuggestion.enable = true;
             shellAliases = {
                 exa = "eza";
+		        vi = "nvim";
+		        vim = "nvim";
                 ".." = "cd ..";
             };
             history = {

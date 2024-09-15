@@ -47,7 +47,7 @@ nixpkgs.hostPlatform = system;
     image = ../../config/wallpapers/wallpaper-0.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-dark.yaml";
     polarity = "dark";
-    opacity.terminal = 0.75;
+    opacity.terminal = 0.9;
     cursor.package = pkgs.bibata-cursors;
     cursor.name = "Bibata-Modern-Ice";
     cursor.size = 24;
@@ -344,6 +344,7 @@ nixpkgs.hostPlatform = system;
         zellij
         docker-compose
         ripgrep
+        wineWow64Packages.full winetricks
     ];
 
     services = {

@@ -13,7 +13,7 @@ in
         ../../config/hyprland.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
-        ../../config/neovim.nix
+ #       ../../config/neovim.nix
         ../../config/rofi/rofi.nix
         ../../config/rofi/config-emoji.nix
         ../../config/rofi/config-long.nix
@@ -156,8 +156,8 @@ in
 #                       foreground = "#dddddd";
 #                   };
 #               };
-                window.opacity = 0.75;
-                font.size = 15;
+#                window.opacity = 0.75;
+#                font.size = 15;
             };
         };
         zsh = {
@@ -167,6 +167,8 @@ in
             autosuggestion.enable = true;
             shellAliases = {
                 exa = "eza";
+                vim = "nvim";
+                vi = "nvim";
                 ".." = "cd ..";
             };
             history = {
