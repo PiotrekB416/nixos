@@ -14,7 +14,8 @@
   terminal = "alacritty"; # Set Default System Terminal
   keyboardLayout = "pl";
   monitors = ''
-    monitor=, preferred, auto, 1
+    monitor=eDP-1,2880x1800@90, 0x0, 1.5
+    monitor=DP-1,1920x1080x60, 0x-1080, 1
   '';
 }
 
