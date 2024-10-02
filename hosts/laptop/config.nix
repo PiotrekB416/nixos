@@ -4,8 +4,6 @@
     host,
     username,
     options,
-    modulesPath,
-    system,
     ...
 }:
 let
@@ -13,7 +11,7 @@ let
 in
 {
     imports = [
-	./hardware.nix
+        ./hardware.nix
         ./users.nix
         ../../modules/amd-drivers.nix
         ../../modules/nvidia-drivers.nix
@@ -25,6 +23,13 @@ in
     boot = {
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
+
+        # Setup keyfile
+        initrd.secrets = {
+            "/crypto_keyfile.bin" = null;
+        };
+
+        initrd.luks.devices."luks-14245c41-e4c4-4266-accc-407570116c37".keyFile = "/crypto_keyfile.bin";
 
         kernel.sysctl = {
             "vm.max_map_count" = 2147483642;
@@ -41,42 +46,42 @@ in
             magicOrExtension = ''\x7fELF....AI\x02'';
         };
     };
-nixpkgs.hostPlatform = system;
-      stylix = {
-    enable = true;
-    image = ../../config/wallpapers/wallpaper-0.jpg;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-dark.yaml";
-    polarity = "dark";
-    opacity.terminal = 0.9;
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
-    cursor.size = 24;
-    fonts = {
-      monospace = {
+
+    stylix = {
+    	enable = true;
+    	image = ../../config/wallpapers/wallpaper-0.jpg;
+    	base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    	polarity = "dark";
+    	opacity.terminal = 0.9;
+    	cursor.package = pkgs.bibata-cursors;
+    	cursor.name = "Bibata-Modern-Ice";
+    	cursor.size = 24;
+    	fonts = {
+      	    monospace = {
         #package = pkgs.nerdfonts.override { fonts = [ "Noto" ]; };
         #name = "NotoMono Nerd Font Mono";
-        package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-        name = "JetBrainsMono Nerd Font Mono";
-      };
-      sansSerif = {
-        package = pkgs.noto-fonts;
-        name = "NotoSans";
-      };
-      serif = {
-        package = pkgs.noto-fonts;
-        name = "NotoSerif";
-      };
-      sizes = {
-        applications = 12;
-        terminal = 15;
-        desktop = 11;
-        popups = 12;
-      };
+        	package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+        	name = "JetBrainsMono Nerd Font Mono";
+      	    };
+            sansSerif = {
+        	package = pkgs.noto-fonts;
+        	name = "NotoSans";
+            };
+      	    serif = {
+        	package = pkgs.noto-fonts;
+        	name = "NotoSerif";
+      	    };
+      	    sizes = {
+        	applications = 12;
+        	terminal = 15;
+        	desktop = 11;
+        	popups = 12;
+	    };
+    	};
     };
-  };
 
     # Extra Module Options
-    drivers.amdgpu.enable = false;
+    drivers.amdgpu.enable = true;
     drivers.nvidia.enable = false;
     drivers.nvidia-prime = {
         enable = false;
@@ -297,8 +302,8 @@ nixpkgs.hostPlatform = system;
         rofi
         swaynotificationcenter
 
-        starship
         swww
+        nerdfonts
         eww
         dunst
         wl-clipboard
@@ -335,7 +340,7 @@ nixpkgs.hostPlatform = system;
         ((stremio.overrideAttrs (prev: rec {
             server = fetchurl {
                 url = "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v${prev.version}/server.js";
-                sha256 = "sha256-7XmbXW50a6LV0724bxJsT3f5+9d44anoh1l1aIW98us=";
+                sha256 = "sha256-R7WU8F0KIQuuSYr8TTQrXa/Q9oarXBWold/W95c6DDA=";
                 postFetch = ''
                     substituteInPlace $out --replace-fail "/usr/bin/mpv" "/etc/profiles/per-user/piotrek/bin/mpv"
                 '';
@@ -344,27 +349,24 @@ nixpkgs.hostPlatform = system;
         zellij
         docker-compose
         ripgrep
-        wineWow64Packages.full winetricks
+	    wineWow64Packages.full winetricks
     ];
 
     services = {
-        #getty.autologinUser = username;
+        getty.autologinUser = username;
         pipewire = {
             enable = true;
             alsa.enable = true;
             alsa.support32Bit = true;
             pulse.enable = true;
-            wireplumber.configPackages = [
-                (pkgs.writeTextDir
-                "wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-                    bluez_monitor.properties = {
-                        --["bluez5.enable-sbc-xq"] = true,
-                        --["bluez5.enable-msbc"] = true,
-                        ["bluez5.enable-hw-volume"] = false,
-                        --["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-                    }
-                '')
-            ];
+            wireplumber.extraConfig.bluetoothEnhancements = {
+                "monitor.bluez.properties" = {
+                    #"bluez5.enable-sbc-xq" = true;
+                    #"bluez5.enable-msbc" = true;
+                    "bluez5.enable-hw-volume" = false;
+                    #"bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+                };
+            };
         };
         xserver = {
             enable = true;
@@ -388,12 +390,6 @@ nixpkgs.hostPlatform = system;
             enable = true;
             nssmdns4 = true;
             openFirewall = true;
-        };
-        openvpn.servers = {
-            homeVPN = {
-                config = ''config /home/piotrek/.openvpn/home.ovpn'';
-                autoStart = false;
-            };
         };
     };
     systemd.services.flatpak-repo = {

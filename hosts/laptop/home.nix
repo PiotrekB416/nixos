@@ -3,6 +3,8 @@
   pkgs,
   username,
   host,
+  inputs,
+  home,
   ...
 }:
 let
@@ -13,7 +15,12 @@ in
         ../../config/hyprland.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
- #       ../../config/neovim.nix
+#        ({config, ...}: let
+#            undodir = "${config.home.homeDirectory}/.vim/undodir";
+#        in import ../../config/nixvim {
+#            inherit undodir pkgs config inputs;
+#        })
+#        ../../config/neovim.nix
         ../../config/rofi/rofi.nix
         ../../config/rofi/config-emoji.nix
         ../../config/rofi/config-long.nix
@@ -42,6 +49,10 @@ in
         early_exit=true
         fill_shape=false
     '';
+
+    home.sessionVariables = {
+        GDK_DPI_SCALE="1.5";
+    };
 
     stylix.targets.waybar.enable = false;
     stylix.targets.rofi.enable = false;
@@ -113,6 +124,12 @@ in
     };
 
     programs = {
+        neovim = {
+            enable = true;
+            viAlias = true;
+            vimAlias = true;
+            defaultEditor = true;
+        };
         gh.enable = true;
         btop = {
             enable = true;
@@ -167,8 +184,8 @@ in
             autosuggestion.enable = true;
             shellAliases = {
                 exa = "eza";
-                vim = "nvim";
-                vi = "nvim";
+		        vi = "nvim";
+		        vim = "nvim";
                 ".." = "cd ..";
             };
             history = {

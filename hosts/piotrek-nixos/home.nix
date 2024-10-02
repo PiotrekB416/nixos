@@ -36,6 +36,9 @@ in
         source = ../../config/wallpapers;
         recursive = true;
     };
+    home.sessionPath = [
+        "/home/${username}/.local/bin"
+    ];
 
     home.file.".config/swappy/config".text = ''
         [Default]
@@ -120,6 +123,12 @@ in
     };
 
     programs = {
+        neovim = {
+            enable = true;
+            viAlias = true;
+            vimAlias = true;
+            defaultEditor = true;
+        };
         gh.enable = true;
         btop = {
             enable = true;
@@ -172,10 +181,13 @@ in
             enableCompletion = true;
             syntaxHighlighting.enable = true;
             autosuggestion.enable = true;
+            sessionVariables = {
+                EDITOR = "nvim";
+            };
             shellAliases = {
                 exa = "eza";
-		vi = "nvim";
-		vim = "nvim";
+		        vi = "nvim";
+		        vim = "nvim";
                 ".." = "cd ..";
             };
             history = {

@@ -12,6 +12,7 @@ let
     terminal
     extraMonitorSettings
     keyboardLayout
+    monitors
     ;
 in
 with lib;
@@ -46,8 +47,8 @@ with lib;
             exec-once = nm-applet --indicator
             exec-once = lxqt-policykit-agent
             exec-once = sleep 1.5 && swww img /home/${username}/Pictures/Wallpapers/wallpaper-0.jpg
-            monitor=,preferred,auto,1
-
+            #monitor=,preferred,auto,1
+            ${monitors}
             exec-once = wl-paste --type text --watch cliphist store #Stores only text data
             exec-once = wl-paste --type image --watch cliphist store #Stores only image data
 
