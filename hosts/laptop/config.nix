@@ -55,7 +55,7 @@ in
     	opacity.terminal = 0.9;
     	cursor.package = pkgs.bibata-cursors;
     	cursor.name = "Bibata-Modern-Ice";
-    	cursor.size = 24;
+    	cursor.size = 36;
     	fonts = {
       	    monospace = {
         #package = pkgs.nerdfonts.override { fonts = [ "Noto" ]; };
@@ -73,9 +73,9 @@ in
       	    };
       	    sizes = {
         	applications = 12;
-        	terminal = 15;
-        	desktop = 11;
-        	popups = 12;
+        	terminal = 22;
+        	desktop = 17;
+        	popups = 18;
 	    };
     	};
     };
@@ -265,7 +265,7 @@ in
     fonts = {
         packages = with pkgs; [
             noto-fonts-emoji
-            noto-fonts-cjk
+            noto-fonts-cjk-sans
             font-awesome
             material-icons
         ];
@@ -291,7 +291,7 @@ in
     environment.systemPackages = with pkgs; [
         wget
         git
-        qt5ct
+        libsForQt5.qt5ct
         brightnessctl
         zip
         unzip
@@ -347,13 +347,28 @@ in
             };
         })))
         zellij
-        docker-compose
+        podman-compose docker-compose
         ripgrep
 	    wineWow64Packages.full winetricks
+        qbittorrent
+        dialog
+        freerdp3
+        iproute2
+        libnotify
+        nmap
+        tree-sitter
+        nwg-displays
+        pkg-config
+        openssl.dev
+        starship
+        texlive.combined.scheme-medium
+        poppler poppler_utils
+        typst
+        tinymist
     ];
 
     services = {
-        getty.autologinUser = username;
+        #getty.autologinUser = username;
         pipewire = {
             enable = true;
             alsa.enable = true;
@@ -391,12 +406,19 @@ in
             nssmdns4 = true;
             openFirewall = true;
         };
+        printing.enable = true;
     };
-    systemd.services.flatpak-repo = {
-        path = [ pkgs.flatpak ];
-        script = ''
-            flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-        '';
+    systemd.services = {
+        flatpak-repo = {
+            path = [ pkgs.flatpak ];
+            script = ''
+                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+            '';
+        };
+        "getty@tty1" = {
+            overrideStrategy = "asDropin";
+            serviceConfig.ExecStart = ["" "@${pkgs.util-linux}/sbin/agetty agetty --login-program ${config.services.getty.loginProgram} --autologin piotrek --noclear --keep-baud %I 115200,38400,9600 $TERM"];
+        };
     };
 
     hardware = {
@@ -444,8 +466,15 @@ in
         libvirtd.enable = true;
         podman = {
             enable = true;
-            dockerCompat = true;
+            #dockerCompat = true;
             defaultNetwork.settings.dns_enabled = true;
+        };
+        docker = {
+            enable = true;
+            rootless = {
+                enable = true;
+                setSocketVariable = true;
+            };
         };
     };
 

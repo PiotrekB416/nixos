@@ -14,14 +14,7 @@ in
     };
 
     config = mkIf cfg.enable {
-        boot.initrd.kernelModules = [ "amdgpu" ];
 
-        hardware.graphics.extraPackages = with pkgs; [
-            rocmPackages.clr.icd
-            rocm-opencl-icd
-            rocm-opencl-runtime
-            amdvlk
-        ];
         systemd.tmpfiles.rules = [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}" ];
         services.xserver.videoDrivers = [ "amdgpu" ];
     };

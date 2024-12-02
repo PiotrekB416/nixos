@@ -13,6 +13,7 @@ in
 {
     imports = [
         ../../config/hyprland.nix
+        ../../config/hyprlock.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
 #        ({config, ...}: let
@@ -49,16 +50,16 @@ in
         early_exit=true
         fill_shape=false
     '';
-
-    home.sessionVariables = {
-        GDK_DPI_SCALE="1.5";
-    };
+    home.sessionPath = [
+        "/home/piotrek/.local/bin"
+    ];
 
     stylix.targets.waybar.enable = false;
     stylix.targets.rofi.enable = false;
     stylix.targets.hyprland.enable = false;
     stylix.targets.neovim.enable = false;
     stylix.targets.btop.enable = false;
+    stylix.targets.firefox.enable = false;
 
     programs.git = {
         enable = true;
@@ -100,29 +101,6 @@ in
         platformTheme.name = "gtk3";
     };
 
-    services = {
-        hypridle = {
-            settings = {
-                general = {
-                    after_sleep_cmd = "hyprctl dispatch dpms on";
-                    ignore_dbus_inhibit = false;
-                    lock_cmd = "hyprlock";
-                };
-                listener = [
-                  {
-                    timeout = 900;
-                    on-timeout = "hyprlock";
-                  }
-                  {
-                    timeout = 1200;
-                    on-timeout = "hyprctl dispatch dpms off";
-                    on-resume = "hyprctl dispatch dpms on";
-                  }
-                ];
-            };
-        };
-    };
-
     programs = {
         neovim = {
             enable = true;
@@ -140,42 +118,40 @@ in
                 update_ms = 1000;
             };
         };
-        alacritty = {
+        zathura.enable = true;
+        wezterm = {
             enable = true;
-            settings = {
-#               colors = {
-#                   bright = {
-#                       black = "#767676";
-#                       blue = "#1a8fff";
-#                       cyan = "#14ffff";
-#                       green = "#23fd00";
-#                       magenta = "#fd28ff";
-#                       red = "#f2201f";
-#                       white = "#ffffff";
-#                       yellow = "#fffd00";
-#                   };
-#                   cursor = {
-#                       cursor = "#ffffff";
-#                       text = "#aaaaaa";
-#                   };
-#                   normal = {
-#                       black = "#000000";
-#                       blue = "#0d73cc";
-#                       cyan = "#0dcdcd";
-#                       green = "#19cb00";
-#                       magenta = "#cb1ed1";
-#                       red = "#cc0403";
-#                       white = "#dddddd";
-#                       yellow = "#cecb00";
-#                   };
-#                   primary = {
-#                       background = "#000000";
-#                       foreground = "#dddddd";
-#                   };
-#               };
-#                window.opacity = 0.75;
-#                font.size = 15;
-            };
+            package = inputs.wezterm.packages.${pkgs.system}.default;
+            extraConfig = ''
+                local wezterm = require 'wezterm'
+                local config = wezterm.config_builder()
+                local act = wezterm.action
+
+                config.default_prog = { "zsh", "-c", "zellij --layout bare options --pane-frames=false" }
+                config.enable_tab_bar = false
+                config.front_end = "OpenGL"
+                config.window_close_confirmation = "NeverPrompt"
+                config.window_padding = {
+                    left = 0,
+                    right = 0,
+                    top = 0,
+                    bottom = 0,
+                }
+                config.keys = {
+                    { key = 'V', mods = 'CTRL|SHIFT', action = act.EmitEvent('execute-paste') },
+                }
+
+                wezterm.on('execute-paste', function(window, pane)
+                    local success, stdout, stderr = wezterm.run_child_process({"wl-paste", "--no-newline"})
+                    if success then
+                        pane:paste(stdout)
+                    else
+                        wezterm.log_error("wl-paste failed with\n" .. stderr .. stdout)
+                    end
+                end)
+
+                return config
+            '';
         };
         zsh = {
             enable = true;
@@ -187,6 +163,7 @@ in
 		        vi = "nvim";
 		        vim = "nvim";
                 ".." = "cd ..";
+                nix-zellij = "nix develop --command \"zsh\" \"-c\" \"launch-zellij --layout programming\"";
             };
             history = {
                 size = 10000;
@@ -194,7 +171,10 @@ in
             };
             autocd = true;
 
-            initExtra = ''bindkey "''${key[Up]}" up-line-or-search'';
+            initExtra = ''
+            bindkey "''${key[Up]}" up-line-or-search
+            bindkey "''${key[Down]}" down-line-or-search
+            '';
         };
         hyprlock.enable = true;
         mpv = {

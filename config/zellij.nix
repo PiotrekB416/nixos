@@ -91,7 +91,13 @@ layout {
     }
 }
     '';
-
+    ".config/zellij/layouts/bare.kdl".text = ''
+    layout {
+        tab {
+            pane
+        }
+    }
+    '';
     ".config/zellij/config.kdl".text = ''
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds {
@@ -293,7 +299,7 @@ plugins {
 // Choose the path to the default shell that zellij will use for opening new panes
 // Default: $SHELL
 //
-// default_shell "fish"
+default_shell "zsh"
 
 // Choose the path to override cwd that zellij will use for opening new panes
 //

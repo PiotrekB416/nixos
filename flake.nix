@@ -10,6 +10,7 @@
       url = "github:VonHeikemen/fine-cmdline.nvim";
       flake = false;
     };
+    wezterm.url = "github:wez/wezterm/main?dir=nix";
   };
 
   outputs =

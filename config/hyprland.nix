@@ -12,7 +12,6 @@ let
     terminal
     extraMonitorSettings
     keyboardLayout
-    monitors
     ;
 in
 with lib;
@@ -47,10 +46,10 @@ with lib;
             exec-once = nm-applet --indicator
             exec-once = lxqt-policykit-agent
             exec-once = sleep 1.5 && swww img /home/${username}/Pictures/Wallpapers/wallpaper-0.jpg
-            #monitor=,preferred,auto,1
-            ${monitors}
             exec-once = wl-paste --type text --watch cliphist store #Stores only text data
             exec-once = wl-paste --type image --watch cliphist store #Stores only image data
+
+            source = ~/.config/hypr/monitors.conf
 
             general {
                 gaps_in = 2
@@ -168,7 +167,7 @@ with lib;
             }
 
             # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-            bind = ${modifier}, Q, exec, ${terminal}
+            bind = ${modifier}, Q, exec, [float;tile] ${terminal} start --always-new-process
             bind = ${modifier}, X, exit,
             bind = ${modifier}, E, exec, dolphin
             bind = ${modifier}, V, togglefloating,
