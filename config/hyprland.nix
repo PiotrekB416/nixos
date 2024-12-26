@@ -143,17 +143,18 @@ with lib;
 
             decoration {
                 rounding = 10
-                    blur {
-                        enabled = true
-                        size = 8
-                        passes = 1
-                        new_optimizations = true
-                    }
-
-                drop_shadow = yes
-                shadow_range = 4
-                shadow_render_power = 3
-                col.shadow = rgba(1a1a1aee)
+                blur {
+                    enabled = true
+                    size = 8
+                    passes = 1
+                    new_optimizations = true
+                }
+                shadow {
+                    enabled = true
+                    range = 4
+                    render_power = 3
+                    color = rgba(1a1a1aee)
+                }
             }
 
 

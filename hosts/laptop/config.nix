@@ -58,25 +58,23 @@ in
     	cursor.size = 36;
     	fonts = {
       	    monospace = {
-        #package = pkgs.nerdfonts.override { fonts = [ "Noto" ]; };
-        #name = "NotoMono Nerd Font Mono";
-        	package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-        	name = "JetBrainsMono Nerd Font Mono";
+            	package = pkgs.nerd-fonts.jetbrains-mono;
+            	name = "JetBrainsMono Nerd Font Mono";
       	    };
             sansSerif = {
-        	package = pkgs.noto-fonts;
-        	name = "NotoSans";
+        	    package = pkgs.noto-fonts;
+            	name = "NotoSans";
             };
-      	    serif = {
-        	package = pkgs.noto-fonts;
-        	name = "NotoSerif";
+          	serif = {
+            	package = pkgs.noto-fonts;
+            	name = "NotoSerif";
       	    };
       	    sizes = {
-        	applications = 12;
-        	terminal = 22;
-        	desktop = 17;
-        	popups = 18;
-	    };
+            	applications = 12;
+            	terminal = 22;
+            	desktop = 17;
+        	    popups = 18;
+	        };
     	};
     };
 
@@ -258,6 +256,7 @@ in
            ];
          };
          zsh.enable = true;
+         fish.enable = true;
          adb.enable = true;
     };
 
@@ -303,7 +302,6 @@ in
         swaynotificationcenter
 
         swww
-        nerdfonts
         eww
         dunst
         wl-clipboard

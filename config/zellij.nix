@@ -2,15 +2,7 @@
     home.file = {
         ".config/zellij/layouts/programming.kdl".text = ''
 layout {
-    default_tab_template {
-        pane size=1 borderless=true {
-            plugin location="zellij:tab-bar"
-        }
-        children
-        pane size=2 borderless=true {
-            plugin location="zellij:status-bar"
-        }
-    }
+
     tab {
         pane split_direction="vertical" {
             pane size="66%" {
@@ -299,7 +291,7 @@ plugins {
 // Choose the path to the default shell that zellij will use for opening new panes
 // Default: $SHELL
 //
-default_shell "zsh"
+default_shell "fish"
 
 // Choose the path to override cwd that zellij will use for opening new panes
 //
@@ -339,10 +331,11 @@ default_shell "zsh"
 //     }
 // }
 
+
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-// theme "default"
+theme "gruvbox-dark"
 
 // The name of the default layout to load on startup
 // Default: "default"

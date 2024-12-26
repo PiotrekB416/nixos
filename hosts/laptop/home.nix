@@ -57,6 +57,7 @@ in
     stylix.targets.waybar.enable = false;
     stylix.targets.rofi.enable = false;
     stylix.targets.hyprland.enable = false;
+    stylix.targets.hyprlock.enable = false;
     stylix.targets.neovim.enable = false;
     stylix.targets.btop.enable = false;
     stylix.targets.firefox.enable = false;
@@ -127,7 +128,7 @@ in
                 local config = wezterm.config_builder()
                 local act = wezterm.action
 
-                config.default_prog = { "zsh", "-c", "zellij --layout bare options --pane-frames=false" }
+                config.default_prog = { "fish" }
                 config.enable_tab_bar = false
                 config.front_end = "OpenGL"
                 config.window_close_confirmation = "NeverPrompt"
@@ -174,6 +175,17 @@ in
             initExtra = ''
             bindkey "''${key[Up]}" up-line-or-search
             bindkey "''${key[Down]}" down-line-or-search
+            '';
+        };
+        fish = {
+            enable = true;
+            shellAliases = {
+                exa = "eza";
+                ".." = "cd ..";
+                nix-zellij = "nix develop --command \"fish\" \"-c\" \"launch-zellij --new-session-with-layout programming\"";
+            };
+            shellInitLast = ''
+                set fish_greeting
             '';
         };
         hyprlock.enable = true;
