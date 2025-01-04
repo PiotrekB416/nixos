@@ -11,13 +11,14 @@
       flake = false;
     };
     wezterm.url = "github:wez/wezterm/main?dir=nix";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs =
     { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
-      host = "laptop";
+      host = "piotrek-nixos";
       username = "piotrek";
     in
     {

@@ -1,4 +1,5 @@
 {
+    inputs,
     config,
     pkgs,
     host,
@@ -53,8 +54,8 @@ in
       	    monospace = {
         #package = pkgs.nerdfonts.override { fonts = [ "Noto" ]; };
         #name = "NotoMono Nerd Font Mono";
-        	package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-        	name = "JetBrainsMono Nerd Font Mono";
+        	package = pkgs.nerd-fonts.jetbrains-mono;
+            name = "JetBrainsMono Nerd Font Mono";
       	    };
             sansSerif = {
         	package = pkgs.noto-fonts;
@@ -251,14 +252,22 @@ in
            ];
          };
          zsh.enable = true;
+         fish.enable = true;
          adb.enable = true;
+         hyprland = {
+            enable = true;
+            # set the flake package
+            package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+            # make sure to also set the portal package, so that they are in sync
+            portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+        };
     };
 
     nixpkgs.config.allowUnfree = true;
     fonts = {
         packages = with pkgs; [
             noto-fonts-emoji
-            noto-fonts-cjk
+            noto-fonts-cjk-sans
             font-awesome
             material-icons
         ];
@@ -284,7 +293,7 @@ in
     environment.systemPackages = with pkgs; [
         wget
         git
-        qt5ct
+        libsForQt5.qt5ct
         brightnessctl
         zip
         unzip
@@ -296,7 +305,6 @@ in
         swaynotificationcenter
 
         swww
-        nerdfonts
         eww
         dunst
         wl-clipboard
@@ -333,16 +341,31 @@ in
         ((stremio.overrideAttrs (prev: rec {
             server = fetchurl {
                 url = "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v${prev.version}/server.js";
-                sha256 = "sha256-7XmbXW50a6LV0724bxJsT3f5+9d44anoh1l1aIW98us=";
+                sha256 = "sha256-R7WU8F0KIQuuSYr8TTQrXa/Q9oarXBWold/W95c6DDA=";
                 postFetch = ''
                     substituteInPlace $out --replace-fail "/usr/bin/mpv" "/etc/profiles/per-user/piotrek/bin/mpv"
                 '';
             };
         })))
         zellij
-        docker-compose
+        podman-compose docker-compose
         ripgrep
 	    wineWow64Packages.full winetricks
+        qbittorrent
+        dialog
+        freerdp3
+        iproute2
+        libnotify
+        nmap
+        tree-sitter
+        nwg-displays
+        pkg-config
+        openssl.dev
+        starship
+        texlive.combined.scheme-medium
+        poppler poppler_utils
+        typst
+        tinymist
     ];
 
     services = {
@@ -352,17 +375,14 @@ in
             alsa.enable = true;
             alsa.support32Bit = true;
             pulse.enable = true;
-            wireplumber.configPackages = [
-                (pkgs.writeTextDir
-                "wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-                    bluez_monitor.properties = {
-                        --["bluez5.enable-sbc-xq"] = true,
-                        --["bluez5.enable-msbc"] = true,
-                        ["bluez5.enable-hw-volume"] = false,
-                        --["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-                    }
-                '')
-            ];
+            wireplumber.extraConfig.bluetoothEnhancements = {
+                "monitor.bluez.properties" = {
+                    #"bluez5.enable-sbc-xq" = true;
+                    #"bluez5.enable-msbc" = true;
+                    "bluez5.enable-hw-volume" = false;
+                    #"bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+                };
+            };
         };
         xserver = {
             enable = true;
@@ -387,6 +407,7 @@ in
             nssmdns4 = true;
             openFirewall = true;
         };
+        printing.enable = true;
     };
     systemd.services.flatpak-repo = {
         path = [ pkgs.flatpak ];
@@ -440,8 +461,15 @@ in
         libvirtd.enable = true;
         podman = {
             enable = true;
-            dockerCompat = true;
+            #dockerCompat = true;
             defaultNetwork.settings.dns_enabled = true;
+        };
+        docker = {
+            enable = true;
+            rootless = {
+                enable = true;
+                setSocketVariable = true;
+            };
         };
     };
 

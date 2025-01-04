@@ -11,10 +11,11 @@
 
   # Program Options
   browser = "firefox"; # Set Default Browser (google-chrome-stable for google-chrome)
-  terminal = "alacritty"; # Set Default System Terminal
+  terminal = "wezterm"; # Set Default System Terminal
   keyboardLayout = "pl";
   monitors = ''
     monitor=, preferred, auto, 1
   '';
+  waybar_scale = "1";
 }
 

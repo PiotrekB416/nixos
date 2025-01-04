@@ -38,6 +38,7 @@ in
     };
     home.sessionPath = [
         "/home/${username}/.local/bin"
+        "/home/${username}/.cargo/bin"
     ];
 
     home.file.".config/swappy/config".text = ''
@@ -58,6 +59,8 @@ in
     stylix.targets.hyprland.enable = false;
     stylix.targets.neovim.enable = false;
     stylix.targets.btop.enable = false;
+    stylix.targets.hyprlock.enable = false;
+    stylix.targets.firefox.enable = false;
 
     programs.git = {
         enable = true;
@@ -139,56 +142,51 @@ in
                 update_ms = 1000;
             };
         };
-        alacritty = {
+        wezterm = {
             enable = true;
-            settings = {
-#               colors = {
-#                   bright = {
-#                       black = "#767676";
-#                       blue = "#1a8fff";
-#                       cyan = "#14ffff";
-#                       green = "#23fd00";
-#                       magenta = "#fd28ff";
-#                       red = "#f2201f";
-#                       white = "#ffffff";
-#                       yellow = "#fffd00";
-#                   };
-#                   cursor = {
-#                       cursor = "#ffffff";
-#                       text = "#aaaaaa";
-#                   };
-#                   normal = {
-#                       black = "#000000";
-#                       blue = "#0d73cc";
-#                       cyan = "#0dcdcd";
-#                       green = "#19cb00";
-#                       magenta = "#cb1ed1";
-#                       red = "#cc0403";
-#                       white = "#dddddd";
-#                       yellow = "#cecb00";
-#                   };
-#                   primary = {
-#                       background = "#000000";
-#                       foreground = "#dddddd";
-#                   };
-#               };
-#                window.opacity = 0.75;
-#                font.size = 15;
-            };
+            package = inputs.wezterm.packages.${pkgs.system}.default;
+            extraConfig = ''
+                local wezterm = require 'wezterm'
+                local config = wezterm.config_builder()
+                local act = wezterm.action
+
+                config.default_prog = { "fish" }
+                config.enable_tab_bar = false
+                config.front_end = "OpenGL"
+                config.window_close_confirmation = "NeverPrompt"
+                config.window_padding = {
+                    left = 0,
+                    right = 0,
+                    top = 0,
+                    bottom = 0,
+                }
+                config.keys = {
+                    { key = 'V', mods = 'CTRL|SHIFT', action = act.EmitEvent('execute-paste') },
+                }
+
+                wezterm.on('execute-paste', function(window, pane)
+                    local success, stdout, stderr = wezterm.run_child_process({"wl-paste", "--no-newline"})
+                    if success then
+                        pane:paste(stdout)
+                    else
+                        wezterm.log_error("wl-paste failed with\n" .. stderr .. stdout)
+                    end
+                end)
+
+                return config
+            '';
         };
         zsh = {
             enable = true;
             enableCompletion = true;
             syntaxHighlighting.enable = true;
             autosuggestion.enable = true;
-            sessionVariables = {
-                EDITOR = "nvim";
-            };
             shellAliases = {
                 exa = "eza";
 		        vi = "nvim";
 		        vim = "nvim";
                 ".." = "cd ..";
+                nix-zellij = "nix develop --command \"zsh\" \"-c\" \"launch-zellij --layout programming\"";
             };
             history = {
                 size = 10000;
@@ -196,7 +194,21 @@ in
             };
             autocd = true;
 
-            initExtra = ''bindkey "''${key[Up]}" up-line-or-search'';
+            initExtra = ''
+            bindkey "''${key[Up]}" up-line-or-search
+            bindkey "''${key[Down]}" down-line-or-search
+            '';
+        };
+        fish = {
+            enable = true;
+            shellAliases = {
+                exa = "eza";
+                ".." = "cd ..";
+                nix-zellij = "nix develop --command \"fish\" \"-c\" \"launch-zellij --new-session-with-layout programming\"";
+            };
+            shellInitLast = ''
+                set fish_greeting
+            '';
         };
         hyprlock.enable = true;
         mpv = {
