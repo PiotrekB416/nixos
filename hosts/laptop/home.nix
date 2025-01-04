@@ -52,6 +52,7 @@ in
     '';
     home.sessionPath = [
         "/home/piotrek/.local/bin"
+        "/home/piotrek/.cargo/bin"
     ];
 
     stylix.targets.waybar.enable = false;
