@@ -10,7 +10,7 @@
   clock24h = true;
 
   # Program Options
-  browser = "firefox"; # Set Default Browser (google-chrome-stable for google-chrome)
+  browser = "librewolf"; # Set Default Browser (google-chrome-stable for google-chrome)
   terminal = "wezterm"; # Set Default System Terminal
   keyboardLayout = "pl";
   waybar_scale = "1.5";

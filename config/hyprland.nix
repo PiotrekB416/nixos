@@ -181,6 +181,7 @@ with lib;
             bind = ${modifier},code:60,exec,emopicker9000
             bind = ${modifier} SHIFT, s, exec, screenshootin
             bind = ${modifier}, space, exec, playerctl play-pause
+            bind = CTRL SHIFT, Escape, exec, flatpak run io.missioncenter.MissionCenter
             #memes - the dna of the soul
             #bind = ${modifier} SHIFT ALT CTRL, L, exec, xdg-open https://linkedin.com
 

@@ -121,7 +121,6 @@ in
     };
 
     programs = {
-        firefox.enable = true;
         starship = {
             enable = true;
             settings = {
@@ -373,6 +372,7 @@ in
         typst
         tinymist
         prismlauncher
+        librewolf
     ];
 
     services = {

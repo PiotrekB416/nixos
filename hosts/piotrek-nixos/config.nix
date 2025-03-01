@@ -109,7 +109,6 @@ in
     };
 
     programs = {
-        firefox.enable = true;
         starship = {
             enable = true;
             settings = {
@@ -366,6 +365,9 @@ in
         poppler poppler_utils
         typst
         tinymist
+        prismlauncher
+        zathura
+        librewolf
     ];
 
     services = {
@@ -414,6 +416,12 @@ in
         script = ''
             flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
         '';
+    };
+    systemd.services.suspend-fix = {
+        serviceConfig = {
+            Type = "oneshot";
+            ExecStart = ''/bin/sh -c "echo GPP0 > /proc/acpi/wakeup"'';
+        };
     };
 
     hardware = {
@@ -470,6 +478,7 @@ in
                 enable = true;
                 setSocketVariable = true;
             };
+            liveRestore = false;
         };
     };
 
