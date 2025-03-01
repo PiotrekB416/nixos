@@ -95,6 +95,14 @@ in
     networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
 
     networking.hostName = host;
+    networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [ 22 ];
+        extraCommands = ''
+            iptables -I OUTPUT 1 -m owner --gid-owner no-internet -j DROP
+            ip6tables -I OUTPUT 1 -m owner --gid-owner no-internet -j DROP
+        '';
+    };
 
     time.timeZone = "Europe/Warsaw";
 
@@ -271,6 +279,7 @@ in
     };
     users = {
         mutableUsers = true;
+        groups.no-internet = {};
     };
 
     xdg.portal = {
@@ -363,6 +372,7 @@ in
         poppler poppler_utils
         typst
         tinymist
+        prismlauncher
     ];
 
     services = {
@@ -436,7 +446,6 @@ in
             enable = true;
             enable32Bit = true;
         };
-        pulseaudio.enable = false;
         bluetooth = {
             enable = true;
             powerOnBoot = true;

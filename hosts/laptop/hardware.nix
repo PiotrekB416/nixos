@@ -31,6 +31,12 @@
       fsType = "btrfs";
     };
 
+  fileSystems."/home/piotrek/Games" =
+    { device = "/dev/disk/by-uuid/155ffdae-419c-469f-89aa-eb29b5aaf734";
+      fsType = "btrfs";
+      options = [ "nofail" ];
+    };
+
   boot.initrd.luks.devices."luks-14245c41-e4c4-4266-accc-407570116c37".device = "/dev/disk/by-uuid/14245c41-e4c4-4266-accc-407570116c37";
 
   swapDevices =
