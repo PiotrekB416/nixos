@@ -79,14 +79,14 @@ in
     };
 
     # Extra Module Options
-    drivers.amdgpu.enable = true;
+    drivers.amdgpu.enable = false;
     drivers.nvidia.enable = false;
     drivers.nvidia-prime = {
         enable = false;
         intelBusID = "";
         nvidiaBusID = "";
     };
-    drivers.intel.enable = false;
+    drivers.intel.enable = true;
     vm.guest-services.enable = false;
     local.hardware-clock.enable = false;
 
@@ -242,6 +242,7 @@ in
              openssl
              pango
              pipewire
+             skia
              stdenv.cc.cc
              systemd
              vulkan-loader
@@ -282,6 +283,7 @@ in
     };
 
     xdg.portal = {
+        xdgOpenUsePortal = true;
         enable = true;
         wlr.enable = true;
         extraPortals = [
@@ -314,7 +316,7 @@ in
         dunst
         wl-clipboard
         pamixer
-        dolphin
+        kdePackages.dolphin
         jdk21
         nasm
 
@@ -373,6 +375,9 @@ in
         tinymist
         prismlauncher
         librewolf
+        nodejs
+        go
+        libsForQt5.plasma-workspace
     ];
 
     services = {

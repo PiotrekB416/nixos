@@ -62,6 +62,7 @@ in
     stylix.targets.neovim.enable = false;
     stylix.targets.btop.enable = false;
     stylix.targets.firefox.enable = false;
+    stylix.targets.qt.enable = false;
 
     programs.git = {
         enable = true;
