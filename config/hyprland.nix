@@ -76,36 +76,33 @@ with lib;
 
                 sensitivity = -0.15 # -1.0 - 1.0, 0 means no modification.
             }
-            windowrule = noborder,^(wofi)$
-            windowrule = center,^(wofi)$
-            windowrule = center,^(steam)$
-            windowrule = float, nm-connection-editor|blueman-manager
-            windowrule = float, swayimg|vlc|Viewnior|pavucontrol
-            windowrule = float, nwg-look|qt5ct|mpv
-            windowrule = float, zoom
-            windowrulev2 = stayfocused, title:^()$,class:^(steam)$
-            windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
+            windowrule = noborder,class:^(wofi)$
+            windowrule = center,class:^(wofi)$
+            windowrule = center,class:^(steam)$
+            windowrule = float, class:(nm-connection-editor|blueman-manager)
+            windowrule = stayfocused, title:^()$,class:^(steam)$
+            windowrule = minsize 1 1, title:^()$,class:^(steam)$
 
-            windowrulev2 = float,class:^(firefox)$,title:^(Picture-in-Picture)$
-            windowrulev2 = keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$,floating:1
-            windowrulev2 = suppressevent fullscreen,class:^(firefox)$,title:^(Picture-in-Picture)$
-            windowrulev2 = pin,class:^(firefox)$,title:^(Picture-in-Picture)$
+            windowrule = float,class:^(${browser})$,title:^(Picture-in-Picture)$
+            windowrule = keepaspectratio,class:^(${browser})$,title:^(Picture-in-Picture)$,floating:1
+            windowrule = suppressevent fullscreen,class:^(${browser})$,title:^(Picture-in-Picture)$
+            windowrule = pin,class:^(${browser})$,title:^(Picture-in-Picture)$
 
-            windowrulev2 = suppressevent fullscreen,class:^(astro-win64-shipping.exe)$
-            windowrulev2 = tile,class:^(astro-win64-shipping.exe)$
+            windowrule = suppressevent fullscreen,class:^(astro-win64-shipping.exe)$
+            windowrule = tile,class:^(astro-win64-shipping.exe)$
 
-            windowrulev2 = float,class:^(nm-connection-editor)$,title:^(Network Connections)$
-            windowrulev2 = move 69.5% 4%,class:^(nm-connection-editor)$,title:^(Network Connections)$
-            windowrulev2 = size 30% 30%,class:^(nm-connection-editor)$,title:^(Network Connections)$
-            windowrulev2 = rounding 0,class:^(nm-connection-editor)$,title:^(Network Connections)$
-            windowrulev2 = pin,class:^(nm-connection-editor)$,title:^(Network Connections)$
+            windowrule = float,class:^(nm-connection-editor)$,title:^(Network Connections)$
+            windowrule = move 69.5% 4%,class:^(nm-connection-editor)$,title:^(Network Connections)$
+            windowrule = size 30% 30%,class:^(nm-connection-editor)$,title:^(Network Connections)$
+            windowrule = rounding 0,class:^(nm-connection-editor)$,title:^(Network Connections)$
+            windowrule = pin,class:^(nm-connection-editor)$,title:^(Network Connections)$
 
-            windowrulev2 = suppressevent fullscreen,class:^(org.kde.dolphin)$
+            windowrule = suppressevent fullscreen,class:^(org.kde.dolphin)$
 
-            windowrulev2 = float,class:^(org.kde.plasmawindowed)$,title:^(Calendar)$
-            windowrulev2 = move 32.5% 4%,class:^(org.kde.plasmawindowed)$,title:^(Calendar)$
-            windowrulev2 = size 35% 40%,class:^(org.kde.plasmawindowed)$,title:^(Calendar)$
-            windowrulev2 = rounding 0,class:^(org.kde.plasmawindowed)$,title:^(Calendar)$
+            windowrule = float,class:^(org.kde.plasmawindowed)$,title:^(Calendar)$
+            windowrule = move 32.5% 4%,class:^(org.kde.plasmawindowed)$,title:^(Calendar)$
+            windowrule = size 35% 40%,class:^(org.kde.plasmawindowed)$,title:^(Calendar)$
+            windowrule = rounding 0,class:^(org.kde.plasmawindowed)$,title:^(Calendar)$
 
             gestures {
                 workspace_swipe = true
@@ -168,7 +165,7 @@ with lib;
             }
 
             # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-            bind = ${modifier}, Q, exec, [float;tile] ${terminal} start --always-new-process
+            bind = ${modifier}, Q, exec, [float;tile] ${terminal} #start --always-new-process
             bind = ${modifier}, X, exit,
             bind = ${modifier}, E, exec, dolphin
             bind = ${modifier}, V, togglefloating,

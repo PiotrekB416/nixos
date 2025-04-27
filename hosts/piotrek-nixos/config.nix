@@ -368,6 +368,7 @@ in
         prismlauncher
         zathura
         librewolf
+        alsa-utils
     ];
 
     services = {
@@ -418,6 +419,7 @@ in
         '';
     };
     systemd.services.suspend-fix = {
+        wantedBy = [ "multi-user.target" ];
         serviceConfig = {
             Type = "oneshot";
             ExecStart = ''/bin/sh -c "echo GPP0 > /proc/acpi/wakeup"'';

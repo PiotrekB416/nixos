@@ -18,7 +18,7 @@
     { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
-      host = "piotrek-nixos";
+      host = "laptop";
       username = "piotrek";
     in
     {
@@ -40,7 +40,7 @@
                 inherit inputs;
                 inherit host;
               };
-              home-manager.useGlobalPkgs = true;
+              #home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
               home-manager.users.${username}.imports = [

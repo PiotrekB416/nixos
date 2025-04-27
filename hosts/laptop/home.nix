@@ -63,6 +63,7 @@ in
     stylix.targets.btop.enable = false;
     stylix.targets.firefox.enable = false;
     stylix.targets.qt.enable = false;
+    #stylix.targets.alacritty.enable = false;
 
     programs.git = {
         enable = true;
@@ -105,6 +106,12 @@ in
     };
 
     programs = {
+        alacritty = {
+            enable = true;
+            settings = {
+                scrolling.multiplier = 15;
+            };
+        };
         neovim = {
             enable = true;
             viAlias = true;
