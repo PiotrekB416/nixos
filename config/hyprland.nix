@@ -40,21 +40,18 @@ with lib;
             env = MOZ_ENABLE_WAYLAND, 1
             exec-once = dbus-update-activation-environment --systemd --all
             exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-            exec-once = killall -q swww;sleep .5 && swww init
-            exec-once = killall -q waybar;sleep .5 && waybar
             exec-once = killall -q swaync;sleep .5 && swaync
             exec-once = nm-applet --indicator
             exec-once = lxqt-policykit-agent
-            exec-once = sleep 1.5 && swww img /home/${username}/Pictures/Wallpapers/wallpaper-0.jpg
             exec-once = wl-paste --type text --watch cliphist store #Stores only text data
             exec-once = wl-paste --type image --watch cliphist store #Stores only image data
 
             source = ~/.config/hypr/monitors.conf
 
             general {
-                gaps_in = 2
-                gaps_out = 5
-                border_size = 3
+                gaps_in = 5
+                gaps_out = 10
+                border_size = 5
                 col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
                 col.inactive_border = rgba(595959aa)
 
@@ -139,7 +136,7 @@ with lib;
 
 
             decoration {
-                rounding = 10
+                rounding = 15
                 blur {
                     enabled = true
                     size = 8

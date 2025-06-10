@@ -12,6 +12,10 @@
     };
     wezterm.url = "github:wez/wezterm/main?dir=nix";
     hyprland.url = "github:hyprwm/Hyprland";
+    quickshell = {
+        url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

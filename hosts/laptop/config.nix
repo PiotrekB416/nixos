@@ -4,6 +4,7 @@
     host,
     username,
     options,
+    inputs,
     ...
 }:
 let
@@ -275,6 +276,9 @@ in
             noto-fonts-cjk-sans
             font-awesome
             material-icons
+            material-symbols
+            nerd-fonts.jetbrains-mono
+            ibm-plex
         ];
     };
     users = {
@@ -317,6 +321,7 @@ in
         wl-clipboard
         pamixer
         kdePackages.dolphin
+        kdePackages.qt5compat
         jdk21
         nasm
 
@@ -329,8 +334,15 @@ in
         github-desktop
         github-cli
         dotnet-sdk_8
-        python311Full
-        python311Packages.pip
+        #python3
+        (python3.withPackages (ps: with ps; [
+            pip
+            materialyoucolor
+            aubio
+            sounddevice
+            pyaudio
+            numpy
+        ]))
 
         android-studio
         android-tools
@@ -378,6 +390,18 @@ in
         nodejs
         go
         libsForQt5.plasma-workspace
+        inputs.quickshell.packages.${pkgs.system}.default
+        cliphist
+        imagemagick
+        fuzzel
+        socat
+        jq
+        xdg-user-dirs
+        wayfreeze
+        wl-screenrec
+        fd
+        ddcutil
+        cava
     ];
 
     services = {
@@ -387,6 +411,7 @@ in
             alsa.enable = true;
             alsa.support32Bit = true;
             pulse.enable = true;
+            jack.enable = true;
             wireplumber.extraConfig.bluetoothEnhancements = {
                 "monitor.bluez.properties" = {
                     #"bluez5.enable-sbc-xq" = true;
@@ -420,6 +445,7 @@ in
             openFirewall = true;
         };
         printing.enable = true;
+        upower.enable = true;
     };
     systemd.services = {
         flatpak-repo = {
