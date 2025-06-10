@@ -269,6 +269,9 @@ in
             noto-fonts-cjk-sans
             font-awesome
             material-icons
+            material-symbols
+            nerd-fonts.jetbrains-mono
+            ibm-plex
         ];
     };
     users = {
@@ -280,10 +283,12 @@ in
         wlr.enable = true;
         extraPortals = [
             pkgs.xdg-desktop-portal-gtk
+            pkgs.xdg-desktop-portal-gnome
             pkgs.xdg-desktop-portal
         ];
         configPackages = [
             pkgs.xdg-desktop-portal-gtk
+            pkgs.xdg-desktop-portal-gnome
             pkgs.xdg-desktop-portal-hyprland
             pkgs.xdg-desktop-portal
         ];
@@ -308,7 +313,7 @@ in
         dunst
         wl-clipboard
         pamixer
-        dolphin
+        kdePackages.dolphin
         jdk21
         nasm
 
@@ -321,8 +326,14 @@ in
         github-desktop
         github-cli
         dotnet-sdk_8
-        python311Full
-        python311Packages.pip
+        (python3.withPackages (ps: with ps; [
+            pip
+            materialyoucolor
+            aubio
+            sounddevice
+            pyaudio
+            numpy
+        ]))
 
         android-studio
         android-tools
@@ -369,6 +380,19 @@ in
         zathura
         librewolf
         alsa-utils
+        lutris mangohud
+        inputs.quickshell.packages.${pkgs.system}.default
+        cliphist
+        imagemagick
+        fuzzel
+        socat
+        jq
+        xdg-user-dirs
+        wayfreeze
+        wl-screenrec
+        fd
+        ddcutil
+        cava
     ];
 
     services = {
@@ -378,6 +402,7 @@ in
             alsa.enable = true;
             alsa.support32Bit = true;
             pulse.enable = true;
+            jack.enable = true;
             wireplumber.extraConfig.bluetoothEnhancements = {
                 "monitor.bluez.properties" = {
                     #"bluez5.enable-sbc-xq" = true;
@@ -411,6 +436,8 @@ in
             openFirewall = true;
         };
         printing.enable = true;
+        pulseaudio.enable = false;
+        upower.enable = true;
     };
     systemd.services.flatpak-repo = {
         path = [ pkgs.flatpak ];
@@ -443,7 +470,6 @@ in
             enable = true;
             enable32Bit = true;
         };
-        pulseaudio.enable = false;
         bluetooth = {
             enable = true;
             powerOnBoot = true;

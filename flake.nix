@@ -22,7 +22,7 @@
     { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
-      host = "laptop";
+      host = "piotrek-nixos";
       username = "piotrek";
     in
     {

@@ -26,7 +26,7 @@ in
                 "input"
                 "uinput"
             ];
-            shell = pkgs.zsh;
+            shell = pkgs.fish;
             ignoreShellProgramCheck = true;
             packages = with pkgs; [
             ];

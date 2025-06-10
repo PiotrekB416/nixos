@@ -11,7 +11,7 @@
 
   # Program Options
   browser = "librewolf"; # Set Default Browser (google-chrome-stable for google-chrome)
-  terminal = "wezterm"; # Set Default System Terminal
+  terminal = "alacritty"; # Set Default System Terminal
   keyboardLayout = "pl";
   monitors = ''
     monitor=, preferred, auto, 1
