@@ -402,6 +402,7 @@ in
         fd
         ddcutil
         cava
+        lm_sensors
     ];
 
     services = {

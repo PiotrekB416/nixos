@@ -12,7 +12,7 @@ let
 in
 {
     imports = [
-        ../../config/hyprland.nix
+        ../../config/hyprland/hyprland.nix
         ../../config/hyprlock.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
