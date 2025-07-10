@@ -11,7 +11,6 @@
       flake = false;
     };
     wezterm.url = "github:wez/wezterm/main?dir=nix";
-    hyprland.url = "github:hyprwm/Hyprland";
     quickshell = {
         url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -22,12 +21,37 @@
     { nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
-      host = "laptop";
       username = "piotrek";
     in
     {
       nixosConfigurations = {
-        ${host} = nixpkgs.lib.nixosSystem {
+        piotrek-nixos = let host = "piotrek-nixos"; in nixpkgs.lib.nixosSystem {
+          specialArgs = {
+	        inherit system;
+            inherit inputs;
+            inherit username;
+            inherit host;
+          };
+          modules = [
+            ./hosts/${host}/config.nix
+            inputs.stylix.nixosModules.stylix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = {
+                inherit username;
+                inherit inputs;
+                inherit host;
+              };
+              #home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              home-manager.users.${username}.imports = [
+                ./hosts/${host}/home.nix
+              ];
+            }
+          ];
+        };
+        laptop = let host = "laptop"; in nixpkgs.lib.nixosSystem {
           specialArgs = {
 	        inherit system;
             inherit inputs;

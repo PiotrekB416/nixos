@@ -263,10 +263,15 @@ in
              xorg.libxshmfence
              zlib
            ];
-         };
-         zsh.enable = true;
-         fish.enable = true;
-         adb.enable = true;
+        };
+        zsh.enable = true;
+        fish.enable = true;
+        adb.enable = true;
+        hyprland = {
+            enable = true;
+            xwayland.enable = true;
+        };
+        niri.enable = true;
     };
 
     nixpkgs.config.allowUnfree = true;
@@ -403,6 +408,7 @@ in
         ddcutil
         cava
         lm_sensors
+        app2unit
     ];
 
     services = {

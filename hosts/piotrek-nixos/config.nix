@@ -249,17 +249,16 @@ in
              xorg.libxshmfence
              zlib
            ];
-         };
-         zsh.enable = true;
-         fish.enable = true;
-         adb.enable = true;
-         hyprland = {
-            enable = true;
-            # set the flake package
-            package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-            # make sure to also set the portal package, so that they are in sync
-            portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
         };
+        zsh.enable = true;
+        fish.enable = true;
+        adb.enable = true;
+        corectrl.enable = true;
+        hyprland = {
+            enable = true;
+            xwayland.enable = true;
+        };
+        niri.enable = true;
     };
 
     nixpkgs.config.allowUnfree = true;
@@ -393,6 +392,9 @@ in
         fd
         ddcutil
         cava
+        lm_sensors
+        libqalculate
+        app2unit
     ];
 
     services = {
