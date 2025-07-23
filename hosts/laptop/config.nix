@@ -375,7 +375,7 @@ in
         podman-compose docker-compose
         ripgrep
 	    wineWow64Packages.full winetricks
-        qbittorrent
+        qbittorrent-nox
         dialog
         freerdp3
         iproute2
@@ -409,6 +409,7 @@ in
         cava
         lm_sensors
         app2unit
+        lutris
     ];
 
     services = {

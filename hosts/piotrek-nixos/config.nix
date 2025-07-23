@@ -360,7 +360,7 @@ in
         podman-compose docker-compose
         ripgrep
 	    wineWow64Packages.full winetricks
-        qbittorrent
+        qbittorrent-nox
         dialog
         freerdp3
         iproute2
