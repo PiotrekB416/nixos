@@ -326,6 +326,7 @@ in
         wl-clipboard
         pamixer
         kdePackages.dolphin
+        kdePackages.qt6ct
         kdePackages.qt5compat
         jdk21
         nasm
@@ -362,15 +363,15 @@ in
         haskellPackages.kmonad
         gamescope
         appimage-run
-        ((stremio.overrideAttrs (prev: rec {
-            server = fetchurl {
-                url = "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v${prev.version}/server.js";
-                sha256 = "sha256-R7WU8F0KIQuuSYr8TTQrXa/Q9oarXBWold/W95c6DDA=";
-                postFetch = ''
-                    substituteInPlace $out --replace-fail "/usr/bin/mpv" "/etc/profiles/per-user/piotrek/bin/mpv"
-                '';
-            };
-        })))
+#       ((stremio.overrideAttrs (prev: rec {
+#           server = fetchurl {
+#               url = "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v${prev.version}/server.js";
+#               sha256 = "sha256-R7WU8F0KIQuuSYr8TTQrXa/Q9oarXBWold/W95c6DDA=";
+#               postFetch = ''
+#                   substituteInPlace $out --replace-fail "/usr/bin/mpv" "/etc/profiles/per-user/piotrek/bin/mpv"
+#               '';
+#           };
+#       })))
         zellij
         podman-compose docker-compose
         ripgrep
@@ -394,7 +395,7 @@ in
         librewolf
         nodejs
         go
-        libsForQt5.plasma-workspace
+        kdePackages.plasma-workspace
         inputs.quickshell.packages.${pkgs.system}.default
         cliphist
         imagemagick
@@ -409,7 +410,7 @@ in
         cava
         lm_sensors
         app2unit
-        lutris
+        lutris mangohud
     ];
 
     services = {
