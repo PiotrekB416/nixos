@@ -264,13 +264,14 @@ in
     nixpkgs.config.allowUnfree = true;
     fonts = {
         packages = with pkgs; [
-            noto-fonts-emoji
+            noto-fonts-color-emoji
             noto-fonts-cjk-sans
             font-awesome
             material-icons
             material-symbols
             nerd-fonts.jetbrains-mono
             ibm-plex
+
         ];
     };
     users = {
@@ -292,7 +293,6 @@ in
             pkgs.xdg-desktop-portal
         ];
     };
-
     environment.systemPackages = with pkgs; [
         wget
         git
@@ -347,22 +347,22 @@ in
         haskellPackages.kmonad
         gamescope
         appimage-run
-        ((stremio.overrideAttrs (prev: rec {
-            server = fetchurl {
-                url = "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v${prev.version}/server.js";
-                sha256 = "sha256-R7WU8F0KIQuuSYr8TTQrXa/Q9oarXBWold/W95c6DDA=";
-                postFetch = ''
-                    substituteInPlace $out --replace-fail "/usr/bin/mpv" "/etc/profiles/per-user/piotrek/bin/mpv"
-                '';
-            };
-        })))
+        # ((stremio.overrideAttrs (prev: rec {
+        #     server = fetchurl {
+        #         url = "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v${prev.version}/server.js";
+        #         sha256 = "sha256-R7WU8F0KIQuuSYr8TTQrXa/Q9oarXBWold/W95c6DDA=";
+        #         postFetch = ''
+        #             substituteInPlace $out --replace-fail "/usr/bin/mpv" "/etc/profiles/per-user/piotrek/bin/mpv"
+        #         '';
+        #     };
+        # })))
         zellij
         podman-compose docker-compose
         ripgrep
 	    wineWow64Packages.full winetricks
         qbittorrent-nox
         dialog
-        freerdp3
+        freerdp
         iproute2
         libnotify
         nmap
@@ -372,7 +372,7 @@ in
         openssl.dev
         starship
         texlive.combined.scheme-medium
-        poppler poppler_utils
+        poppler poppler-utils
         typst
         tinymist
         prismlauncher
