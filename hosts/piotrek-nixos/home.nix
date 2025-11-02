@@ -66,8 +66,10 @@ in
 
     programs.git = {
         enable = true;
-        userName = "${gitUsername}";
-        userEmail = "${gitEmail}";
+        settings.user = {
+            name = "${gitUsername}";
+            email = "${gitEmail}";
+        };
     };
 
     programs.fastfetch.enable = true;
@@ -202,7 +204,7 @@ in
             };
             autocd = true;
 
-            initExtra = ''
+            initContent = ''
             bindkey "''${key[Up]}" up-line-or-search
             bindkey "''${key[Down]}" down-line-or-search
             '';

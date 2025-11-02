@@ -379,8 +379,8 @@ in
         zathura
         librewolf
         alsa-utils
-        lutris mangohud
-        inputs.quickshell.packages.${pkgs.system}.default
+        lutris mangohud antimicrox
+        inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
         cliphist
         imagemagick
         fuzzel
