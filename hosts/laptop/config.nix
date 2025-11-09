@@ -277,7 +277,7 @@ in
     nixpkgs.config.allowUnfree = true;
     fonts = {
         packages = with pkgs; [
-            noto-fonts-emoji
+            noto-fonts-color-emoji
             noto-fonts-cjk-sans
             font-awesome
             material-icons
@@ -378,7 +378,7 @@ in
 	    wineWow64Packages.full winetricks
         qbittorrent-nox
         dialog
-        freerdp3
+        freerdp
         iproute2
         libnotify
         nmap
@@ -388,7 +388,7 @@ in
         openssl.dev
         starship
         texlive.combined.scheme-medium
-        poppler poppler_utils
+        poppler poppler-utils
         typst
         tinymist
         prismlauncher
@@ -411,6 +411,8 @@ in
         lm_sensors
         app2unit
         lutris mangohud
+        vulkan-tools
+        sdl3
     ];
 
     services = {
