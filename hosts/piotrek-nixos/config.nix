@@ -259,6 +259,7 @@ in
             xwayland.enable = true;
         };
         niri.enable = true;
+        gamemode.enable = true;
     };
 
     nixpkgs.config.allowUnfree = true;
@@ -395,6 +396,10 @@ in
         lm_sensors
         libqalculate
         app2unit
+        adwaita-icon-theme
+        gtk3
+        glib
+        gsettings-desktop-schemas
     ];
 
     services = {
@@ -440,6 +445,7 @@ in
         printing.enable = true;
         pulseaudio.enable = false;
         upower.enable = true;
+        input-remapper.enable = true;
     };
     systemd.services.flatpak-repo = {
         path = [ pkgs.flatpak ];
