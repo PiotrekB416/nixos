@@ -11,9 +11,17 @@
       flake = false;
     };
     wezterm.url = "github:wez/wezterm/main?dir=nix";
+    mango = {
+      url = "github:DreamMaoMao/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     quickshell = {
-        url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dms-shell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -42,7 +50,7 @@
                 inherit inputs;
                 inherit host;
               };
-              #home-manager.useGlobalPkgs = true;
+              home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
               home-manager.users.${username}.imports = [

@@ -18,18 +18,24 @@ let
 in
 with lib;
 {
-    home.file.".config/hypr/hyprland.conf".text = ''
+    wayland.windowManager.hyprland = {
+        enable = true;
+        systemd.enable = true;
+    #};
+    #home.file.".config/hypr/hyprland.conf".text = ''
+        extraConfig = ''
 $modifier = SUPER
 $terminal = ${terminal}
 $browser = ${browser}
 $extraMonitorSettings = ${extraMonitorSettings}
 $keyboardLayout = ${keyboardLayout}
 
-source = ~/.config/hypr/monitors.conf
-source = ~/.config/hypr/env.conf
-source = ~/.config/hypr/execs.conf
-source = ~/.config/hypr/keybinds.conf
+source = ./extra.conf
+source = ./env.conf
+source = ./execs.conf
+source = ./keybinds.conf
     '';
+    };
     home.file.".config/hypr/env.conf".source = ./env.conf;
     home.file.".config/hypr/execs.conf".source = ./execs.conf;
     home.file.".config/hypr/keybinds.conf".source = ./keybinds.conf;

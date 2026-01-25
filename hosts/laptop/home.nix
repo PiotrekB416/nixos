@@ -14,6 +14,8 @@ in
     imports = [
         ../../config/hyprland/hyprland.nix
         ../../config/hyprlock.nix
+        inputs.mango.hmModules.mango
+        ../../config/mango/mango.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
 #        ({config, ...}: let
@@ -27,6 +29,7 @@ in
         ../../config/rofi/config-long.nix
         ../../config/swaync.nix
         ../../config/waybar.nix
+        inputs.dms-shell.homeModules.default
     ];
     programs.home-manager.enable = true;
     # Home Manager Settings
@@ -67,8 +70,10 @@ in
 
     programs.git = {
         enable = true;
-        userName = "${gitUsername}";
-        userEmail = "${gitEmail}";
+        settings.user = {
+            name = "${gitUsername}";
+            email = "${gitEmail}";
+        };
     };
 
     programs.fastfetch.enable = true;
@@ -77,6 +82,12 @@ in
         userDirs = {
             enable = true;
             createDirectories = true;
+        };
+        systemDirs = {
+            data = [
+                "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
+                "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
+            ];
         };
     };
 
@@ -181,7 +192,7 @@ in
             };
             autocd = true;
 
-            initExtra = ''
+            initContent = ''
             bindkey "''${key[Up]}" up-line-or-search
             bindkey "''${key[Down]}" down-line-or-search
             '';
@@ -203,6 +214,12 @@ in
             scripts = with pkgs.mpvScripts; [
                 mpris
             ];
+        };
+        dank-material-shell = {
+            enable = true;
+            systemd = {
+                enable = true; # if you prefer starting from your compositor
+            };
         };
     };
 

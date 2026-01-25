@@ -266,15 +266,19 @@ in
         };
         zsh.enable = true;
         fish.enable = true;
-        adb.enable = true;
         hyprland = {
             enable = true;
+            withUWSM = true;
             xwayland.enable = true;
         };
         niri.enable = true;
+        gamemode.enable = true;
     };
 
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config = {
+        allowUnfree = true;
+        android_sdk.accept_license = true;
+    };
     fonts = {
         packages = with pkgs; [
             noto-fonts-color-emoji
@@ -392,7 +396,8 @@ in
         typst
         tinymist
         prismlauncher
-        librewolf
+        #librewolf
+        firefox #while they work on cache
         nodejs
         go
         kdePackages.plasma-workspace
@@ -413,6 +418,11 @@ in
         lutris mangohud
         vulkan-tools
         sdl3
+        adwaita-icon-theme
+        gtk3
+        glib
+        gsettings-desktop-schemas
+        godot
     ];
 
     services = {
@@ -455,8 +465,17 @@ in
             nssmdns4 = true;
             openFirewall = true;
         };
-        printing.enable = true;
+        printing = {
+            enable = true;
+            drivers = with pkgs; [
+                samsung-unified-linux-driver_1_00_37
+                samsung-unified-linux-driver
+            ];
+        };
         upower.enable = true;
+        accounts-daemon.enable = true;
+        power-profiles-daemon.enable = true;
+        input-remapper.enable = true;
     };
     systemd.services = {
         flatpak-repo = {
@@ -501,8 +520,14 @@ in
                 "nix-command"
                 "flakes"
             ];
-            substituters = [ "https://hyprland.cachix.org" ];
-            trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+            substituters = [
+                "https://hyprland.cachix.org"
+                #"https://nix-community.cachix.org"
+            ];
+            trusted-public-keys = [
+                "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+                #"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+            ];
         };
         gc = {
             automatic = true;
