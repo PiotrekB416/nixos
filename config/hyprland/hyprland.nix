@@ -32,12 +32,12 @@ $keyboardLayout = ${keyboardLayout}
 
 source = ./extra.conf
 source = ./env.conf
-source = ./execs.conf
+source = ./misc.conf
 source = ./keybinds.conf
     '';
     };
     home.file.".config/hypr/env.conf".source = ./env.conf;
-    home.file.".config/hypr/execs.conf".source = ./execs.conf;
+    home.file.".config/hypr/misc.conf".source = ./misc.conf;
     home.file.".config/hypr/keybinds.conf".source = ./keybinds.conf;
 
 
@@ -66,5 +66,27 @@ else
     hyprctl dispatch $argv[1] (math "floor(($active_ws - 1) / 10) * 10 + $argv[2]")
 end
     '';
+    };
+
+    home.file.".config/hypr/scripts/sysmon.fish" = {
+        executable = true;
+        text = ''
+#!/usr/bin/env fish
+
+set -l sysmon_data (hyprctl workspaces -j | jq 'map(select(.name == "special:sysmon")).[0]')
+
+if string match -q "null" $sysmon_data
+    echo 'workspace not open'
+    exit
+end
+
+set -l windows (echo $sysmon_data | jq '.windows')
+
+echo $windows
+
+if test "$windows" = 0
+    exec alacritty --class sysmon -e 'btop'
+end
+        '';
     };
 }

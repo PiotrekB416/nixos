@@ -296,7 +296,7 @@ in
     };
 
     xdg.portal = {
-        xdgOpenUsePortal = true;
+        xdgOpenUsePortal = false;
         enable = true;
         wlr.enable = true;
         extraPortals = [
@@ -423,6 +423,9 @@ in
         glib
         gsettings-desktop-schemas
         godot
+        ncdu
+        dgop
+        linux-wallpaperengine
     ];
 
     services = {

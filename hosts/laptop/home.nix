@@ -8,7 +8,7 @@
   ...
 }:
 let
-    inherit (import ./variables.nix) gitUsername gitEmail;
+    inherit (import ./variables.nix) gitUsername gitEmail terminal;
 in
 {
     imports = [
@@ -29,7 +29,9 @@ in
         ../../config/rofi/config-long.nix
         ../../config/swaync.nix
         ../../config/waybar.nix
+        inputs.caelestia-shell.homeManagerModules.default
         inputs.dms-shell.homeModules.default
+        inputs.noctalia.homeModules.default
     ];
     programs.home-manager.enable = true;
     # Home Manager Settings
@@ -57,6 +59,9 @@ in
         "/home/piotrek/.local/bin"
         "/home/piotrek/.cargo/bin"
     ];
+    home.sessionVariables = {
+        TERMINAL = "${terminal}";
+    };
 
     stylix.targets.waybar.enable = false;
     stylix.targets.rofi.enable = false;
@@ -214,11 +219,41 @@ in
             scripts = with pkgs.mpvScripts; [
                 mpris
             ];
+            config = {
+                target-colorspace-hint = "no";
+            };
         };
+        caelestia = {
+            enable = false;
+            systemd = {
+                enable = true; # if you prefer starting from your compositor
+                target = "graphical-session.target";
+                environment = [];
+            };
+            # settings = {
+            #     # bar.status = {
+            #     #     showBattery = false;
+            #     # };
+            #     paths.wallpaperDir = "~/Pictures/Wallpapers";
+            # };
+            cli = {
+                enable = true; # Also add caelestia-cli to path
+                settings = {
+                    theme.enableGtk = false;
+                };
+            };
+        };
+
         dank-material-shell = {
             enable = true;
             systemd = {
-                enable = true; # if you prefer starting from your compositor
+                enable = true;
+            };
+        };
+        noctalia-shell = {
+            enable = false;
+            systemd = {
+                enable = true;
             };
         };
     };
