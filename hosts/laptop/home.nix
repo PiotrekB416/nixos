@@ -16,6 +16,7 @@ in
         ../../config/hyprlock.nix
         inputs.mango.hmModules.mango
         ../../config/mango/mango.nix
+        ../../config/niri/niri.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
 #        ({config, ...}: let
@@ -29,9 +30,9 @@ in
         ../../config/rofi/config-long.nix
         ../../config/swaync.nix
         ../../config/waybar.nix
-        inputs.caelestia-shell.homeManagerModules.default
+        #inputs.caelestia-shell.homeManagerModules.default
         inputs.dms-shell.homeModules.default
-        inputs.noctalia.homeModules.default
+        #inputs.noctalia.homeModules.default
     ];
     programs.home-manager.enable = true;
     # Home Manager Settings
@@ -223,26 +224,26 @@ in
                 target-colorspace-hint = "no";
             };
         };
-        caelestia = {
-            enable = false;
-            systemd = {
-                enable = true; # if you prefer starting from your compositor
-                target = "graphical-session.target";
-                environment = [];
-            };
-            # settings = {
-            #     # bar.status = {
-            #     #     showBattery = false;
-            #     # };
-            #     paths.wallpaperDir = "~/Pictures/Wallpapers";
-            # };
-            cli = {
-                enable = true; # Also add caelestia-cli to path
-                settings = {
-                    theme.enableGtk = false;
-                };
-            };
-        };
+        # caelestia = {
+        #     enable = false;
+        #     systemd = {
+        #         enable = true; # if you prefer starting from your compositor
+        #         target = "graphical-session.target";
+        #         environment = [];
+        #     };
+        #     # settings = {
+        #     #     # bar.status = {
+        #     #     #     showBattery = false;
+        #     #     # };
+        #     #     paths.wallpaperDir = "~/Pictures/Wallpapers";
+        #     # };
+        #     cli = {
+        #         enable = true; # Also add caelestia-cli to path
+        #         settings = {
+        #             theme.enableGtk = false;
+        #         };
+        #     };
+        # };
 
         dank-material-shell = {
             enable = true;
@@ -250,12 +251,12 @@ in
                 enable = true;
             };
         };
-        noctalia-shell = {
-            enable = false;
-            systemd = {
-                enable = true;
-            };
-        };
+        # noctalia-shell = {
+        #     enable = false;
+        #     systemd = {
+        #         enable = true;
+        #     };
+        # };
     };
 
     home.packages = [

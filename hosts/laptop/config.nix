@@ -396,8 +396,8 @@ in
         typst
         tinymist
         prismlauncher
-        #librewolf
-        firefox #while they work on cache
+        librewolf
+        #firefox #while they work on cache
         nodejs
         go
         kdePackages.plasma-workspace
@@ -426,6 +426,7 @@ in
         ncdu
         dgop
         linux-wallpaperengine
+        xwayland-satellite
     ];
 
     services = {

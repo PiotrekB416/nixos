@@ -68,58 +68,12 @@
         "type": "github"
       }
     },
-    "caelestia-cli": {
-      "inputs": {
-        "caelestia-shell": [
-          "caelestia-shell"
-        ],
-        "nixpkgs": [
-          "caelestia-shell",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1769226332,
-        "narHash": "sha256-JKD9M2+/J4e6nRtcY2XRfpLlOHaGXT4aUHyIG/20qlw=",
-        "owner": "caelestia-dots",
-        "repo": "cli",
-        "rev": "52a3a3c50ef55e3561057e8a74c85cf16f83039f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "caelestia-dots",
-        "repo": "cli",
-        "type": "github"
-      }
-    },
-    "caelestia-shell": {
-      "inputs": {
-        "caelestia-cli": "caelestia-cli",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "quickshell": "quickshell"
-      },
-      "locked": {
-        "lastModified": 1769305032,
-        "narHash": "sha256-Of4+4pnT+EmAl/DM1GYkpceX6yXw+QLU30WTec0ZypQ=",
-        "owner": "caelestia-dots",
-        "repo": "shell",
-        "rev": "b33440684950acf0b3f089b789da370685d9396c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "caelestia-dots",
-        "repo": "shell",
-        "type": "github"
-      }
-    },
     "dms-shell": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
         ],
-        "quickshell": "quickshell_2"
+        "quickshell": "quickshell"
       },
       "locked": {
         "lastModified": 1769493135,
@@ -416,26 +370,6 @@
         "type": "github"
       }
     },
-    "noctalia": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1769489223,
-        "narHash": "sha256-QYKahAdXhgmBBl25ONYLg+MpHPy5yYqZIwPi8V+iXMU=",
-        "owner": "noctalia-dev",
-        "repo": "noctalia-shell",
-        "rev": "382e548d2b54ac2d25583ce58dd02ee838bb1b23",
-        "type": "github"
-      },
-      "original": {
-        "owner": "noctalia-dev",
-        "repo": "noctalia-shell",
-        "type": "github"
-      }
-    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -464,27 +398,6 @@
     "quickshell": {
       "inputs": {
         "nixpkgs": [
-          "caelestia-shell",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768985439,
-        "narHash": "sha256-qkU4r+l+UPz4dutMMRZSin64HuVZkEv9iFpu9yMWVY0=",
-        "ref": "refs/heads/master",
-        "rev": "191085a8821b35680bba16ce5411fc9dbe912237",
-        "revCount": 731,
-        "type": "git",
-        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
-      }
-    },
-    "quickshell_2": {
-      "inputs": {
-        "nixpkgs": [
           "dms-shell",
           "nixpkgs"
         ]
@@ -504,7 +417,7 @@
         "url": "https://git.outfoxxed.me/quickshell/quickshell"
       }
     },
-    "quickshell_3": {
+    "quickshell_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -526,14 +439,12 @@
     },
     "root": {
       "inputs": {
-        "caelestia-shell": "caelestia-shell",
         "dms-shell": "dms-shell",
         "fine-cmdline": "fine-cmdline",
         "home-manager": "home-manager",
         "mango": "mango",
         "nixpkgs": "nixpkgs",
-        "noctalia": "noctalia",
-        "quickshell": "quickshell_3",
+        "quickshell": "quickshell_2",
         "stylix": "stylix",
         "wezterm": "wezterm"
       }
