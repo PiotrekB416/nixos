@@ -32,6 +32,9 @@ with lib;
 # source=./misc.conf
 #         '';
         settings = ''
+bind=SUPER,W,spawn,${browser}
+bind=SUPER,T,spawn,${terminal}
+
 source = ./extra.conf
 source = ./env.conf
 source = ./keybinds.conf
