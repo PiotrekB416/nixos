@@ -25,12 +25,11 @@ in
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
 
-        # Setup keyfile
-        initrd.secrets = {
-            "/crypto_keyfile.bin" = null;
-        };
-
-        initrd.luks.devices."luks-14245c41-e4c4-4266-accc-407570116c37".keyFile = "/crypto_keyfile.bin";
+ 	initrd.luks.devices."luks-e446b62d-f8c1-453c-9793-fee59cfd5e0c" = {
+		device = "/dev/disk/by-uuid/e446b62d-f8c1-453c-9793-fee59cfd5e0c";
+		preLVM = true;
+	};
+  	supportedFilesystems = [ "btrfs" ];
 
         kernel.sysctl = {
             "vm.max_map_count" = 2147483642;

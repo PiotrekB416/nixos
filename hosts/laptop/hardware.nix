@@ -14,34 +14,35 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/4750c38f-ce0c-4a1f-985d-52ab0f8bdd02";
+    { device = "/dev/disk/by-uuid/fb68e0ca-ea12-4fe9-9116-4503e6a2f9cd";
       fsType = "btrfs";
-      options = [ "subvol=@" ];
-    };
-
-  boot.initrd.luks.devices."luks-e199fa98-bc22-41ea-b468-a4d328ed6a4b".device = "/dev/disk/by-uuid/e199fa98-bc22-41ea-b468-a4d328ed6a4b";
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B47C-B46B";
-      fsType = "vfat";
+      options = [ "subvol=root" "compress=zstd" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/84a98f6b-9eb2-4fbc-b1d0-e2195353e5b0";
+    { device = "/dev/disk/by-uuid/fb68e0ca-ea12-4fe9-9116-4503e6a2f9cd";
       fsType = "btrfs";
+      options = [ "subvol=home" "compress=zstd" ];
     };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/fb68e0ca-ea12-4fe9-9116-4503e6a2f9cd";
+      fsType = "btrfs";
+      options = [ "subvol=nix" "compress=zstd" ];
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/FE30-490C";
+      fsType = "vfat";
+    };
+
+  swapDevices = [ { device = "/dev/disk/by-uuid/ab37c46c-7e59-4f87-b847-ef2f7f752e07"; } ];
 
   fileSystems."/home/piotrek/Games" =
     { device = "/dev/disk/by-uuid/155ffdae-419c-469f-89aa-eb29b5aaf734";
       fsType = "btrfs";
       options = [ "nofail" ];
     };
-
-  boot.initrd.luks.devices."luks-14245c41-e4c4-4266-accc-407570116c37".device = "/dev/disk/by-uuid/14245c41-e4c4-4266-accc-407570116c37";
-
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/0ea992dd-90da-49ce-8908-65daa1005653"; }
-    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
