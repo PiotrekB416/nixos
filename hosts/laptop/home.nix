@@ -72,6 +72,7 @@ in
     stylix.targets.btop.enable = false;
     stylix.targets.firefox.enable = false;
     stylix.targets.qt.enable = false;
+    stylix.targets.dank-material-shell.enable = false;
     #stylix.targets.alacritty.enable = false;
 
     programs.git = {

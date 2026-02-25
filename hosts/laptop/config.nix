@@ -91,7 +91,12 @@ in
     local.hardware-clock.enable = false;
 
     # Enable networking
-    networking.networkmanager.enable = true;
+    networking.networkmanager = {
+        enable = true;
+        plugins = with pkgs; [
+            networkmanager-openvpn
+        ];
+    };
     networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
 
     networking.hostName = host;
@@ -272,6 +277,7 @@ in
         };
         niri.enable = true;
         gamemode.enable = true;
+        kdeconnect.enable = true;
     };
 
     nixpkgs.config = {
