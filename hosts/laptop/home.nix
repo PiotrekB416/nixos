@@ -30,6 +30,7 @@ in
         ../../config/rofi/config-long.nix
         ../../config/swaync.nix
         ../../config/waybar.nix
+        ../../config/profile.nix
         #inputs.caelestia-shell.homeManagerModules.default
         inputs.dms-shell.homeModules.default
         #inputs.noctalia.homeModules.default

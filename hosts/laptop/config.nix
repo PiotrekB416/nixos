@@ -251,20 +251,20 @@ in
              stdenv.cc.cc
              systemd
              vulkan-loader
-             xorg.libX11
-             xorg.libXScrnSaver
-             xorg.libXcomposite
-             xorg.libXcursor
-             xorg.libXdamage
-             xorg.libXext
-             xorg.libXfixes
-             xorg.libXi
-             xorg.libXrandr
-             xorg.libXrender
-             xorg.libXtst
-             xorg.libxcb
-             xorg.libxkbfile
-             xorg.libxshmfence
+             libX11
+             libXScrnSaver
+             libXcomposite
+             libXcursor
+             libXdamage
+             libXext
+             libXfixes
+             libXi
+             libXrandr
+             libXrender
+             libXtst
+             libxcb
+             libxkbfile
+             libxshmfence
              zlib
            ];
         };
@@ -384,7 +384,7 @@ in
         zellij
         podman-compose docker-compose
         ripgrep
-	    wineWow64Packages.full winetricks
+	      wineWow64Packages.full winetricks
         qbittorrent-nox
         dialog
         freerdp
@@ -432,10 +432,14 @@ in
         dgop
         linux-wallpaperengine
         xwayland-satellite
+        fzf
     ];
 
     services = {
-        #getty.autologinUser = username;
+        getty = {
+          autologinUser = username;
+          autologinOnce = true;
+        };
         pipewire = {
             enable = true;
             alsa.enable = true;
@@ -486,6 +490,9 @@ in
         power-profiles-daemon.enable = true;
         input-remapper.enable = true;
     };
+
+    security.polkit.enable = true;
+
     systemd.services = {
         flatpak-repo = {
             path = [ pkgs.flatpak ];
@@ -493,10 +500,10 @@ in
                 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
             '';
         };
-        "getty@tty1" = {
-            overrideStrategy = "asDropin";
-            serviceConfig.ExecStart = ["" "@${pkgs.util-linux}/sbin/agetty agetty --login-program ${config.services.getty.loginProgram} --autologin piotrek --noclear --keep-baud %I 115200,38400,9600 $TERM"];
-        };
+        # "getty@tty1" = {
+        #     overrideStrategy = "asDropin";
+        #     serviceConfig.ExecStart = ["" "@${pkgs.util-linux}/sbin/agetty agetty --login-program ${config.services.getty.loginProgram} --autologin piotrek --noclear --keep-baud %I 115200,38400,9600 $TERM"];
+        # };
     };
 
     hardware = {
