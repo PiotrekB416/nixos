@@ -87,10 +87,23 @@ in
     local.hardware-clock.enable = false;
 
     # Enable networking
-    networking.networkmanager.enable = true;
+    networking.networkmanager = {
+        enable = true;
+        plugins = with pkgs; [
+            networkmanager-openvpn
+        ];
+    };
     networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
-
+    networking.nftables.enable = true;
     networking.hostName = host;
+    networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [ 22 ];
+#        extraCommands = ''
+#            nft insert rule ip filter OUTPUT skgid 991 counter drop
+#            nft insert rule ip6 filter OUTPUT skgid 991 counter drop 
+#        '';
+    };
 
     time.timeZone = "Europe/Warsaw";
 
@@ -230,39 +243,45 @@ in
              openssl
              pango
              pipewire
+             skia
              stdenv.cc.cc
              systemd
              vulkan-loader
-             xorg.libX11
-             xorg.libXScrnSaver
-             xorg.libXcomposite
-             xorg.libXcursor
-             xorg.libXdamage
-             xorg.libXext
-             xorg.libXfixes
-             xorg.libXi
-             xorg.libXrandr
-             xorg.libXrender
-             xorg.libXtst
-             xorg.libxcb
-             xorg.libxkbfile
-             xorg.libxshmfence
+             libX11
+             libXScrnSaver
+             libXcomposite
+             libXcursor
+             libXdamage
+             libXext
+             libXfixes
+             libXi
+             libXrandr
+             libXrender
+             libXtst
+             libxcb
+             libxkbfile
+             libxshmfence
+
              zlib
            ];
         };
         zsh.enable = true;
         fish.enable = true;
-        adb.enable = true;
         corectrl.enable = true;
         hyprland = {
             enable = true;
+            withUWSM = true;
             xwayland.enable = true;
         };
         niri.enable = true;
         gamemode.enable = true;
+        kdeconnect.enable = true;
     };
 
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config = {
+        allowUnfree = true;
+        android_sdk.accept_license = true;
+    };
     fonts = {
         packages = with pkgs; [
             noto-fonts-color-emoji
@@ -284,12 +303,10 @@ in
         wlr.enable = true;
         extraPortals = [
             pkgs.xdg-desktop-portal-gtk
-            pkgs.xdg-desktop-portal-gnome
             pkgs.xdg-desktop-portal
         ];
         configPackages = [
             pkgs.xdg-desktop-portal-gtk
-            pkgs.xdg-desktop-portal-gnome
             pkgs.xdg-desktop-portal-hyprland
             pkgs.xdg-desktop-portal
         ];
@@ -298,6 +315,7 @@ in
         wget
         git
         libsForQt5.qt5ct
+        libsForQt5.qt5.qtwayland
         brightnessctl
         zip
         unzip
@@ -308,16 +326,23 @@ in
         rofi
         swaynotificationcenter
 
-        swww
+        awww
         eww
         dunst
         wl-clipboard
         pamixer
         kdePackages.dolphin
+        kdePackages.qt6ct
+        kdePackages.qt5compat
+        kdePackages.qtwayland
+        kdePackages.wayland
+        kdePackages.qtsvg
+        kdePackages.kio # needed since 25.11
+        kdePackages.kio-fuse #to mount remote filesystems via FUSE
+        kdePackages.kio-extras #extra protocols support (sftp, fish and more)
         jdk21
         nasm
 
-        wine64
         gcc
         gdb
         clang-tools
@@ -360,7 +385,9 @@ in
         zellij
         podman-compose docker-compose
         ripgrep
-	    wineWow64Packages.full winetricks
+        wineWow64Packages.stable
+        winetricks
+        wineWow64Packages.waylandFull
         qbittorrent-nox
         dialog
         freerdp
@@ -377,10 +404,9 @@ in
         typst
         tinymist
         prismlauncher
-        zathura
         librewolf
         alsa-utils
-        lutris mangohud antimicrox
+        antimicrox
         inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
         cliphist
         imagemagick
@@ -396,10 +422,20 @@ in
         lm_sensors
         libqalculate
         app2unit
+        lutris mangohud
+        vulkan-tools
+        sdl3
         adwaita-icon-theme
         gtk3
         glib
         gsettings-desktop-schemas
+        godot
+        ncdu
+        dgop
+        linux-wallpaperengine
+        xwayland-satellite
+        fzf
+        fishPlugins.foreign-env
     ];
 
     services = {
@@ -437,28 +473,40 @@ in
         playerctld.enable = true;
         gnome.gnome-keyring.enable = true;
         blueman.enable = true;
-        avahi = {
+        # avahi = {
+        #     enable = true;
+        #     nssmdns4 = true;
+        #     openFirewall = true;
+        # };
+        printing = {
             enable = true;
-            nssmdns4 = true;
-            openFirewall = true;
+            drivers = with pkgs; [
+                samsung-unified-linux-driver_1_00_37
+                samsung-unified-linux-driver
+            ];
         };
-        printing.enable = true;
-        pulseaudio.enable = false;
         upower.enable = true;
+        accounts-daemon.enable = true;
+        power-profiles-daemon.enable = true;
         input-remapper.enable = true;
     };
-    systemd.services.flatpak-repo = {
+
+    security.polkit.enable = true;
+
+    systemd.services = {
+      flatpak-repo = {
         path = [ pkgs.flatpak ];
         script = ''
             flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
         '';
-    };
-    systemd.services.suspend-fix = {
+      };
+      suspend-fix = {
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
             Type = "oneshot";
             ExecStart = ''/bin/sh -c "echo GPP0 > /proc/acpi/wakeup"'';
         };
+      };
     };
 
     hardware = {
@@ -491,8 +539,17 @@ in
                 "nix-command"
                 "flakes"
             ];
-            substituters = [ "https://hyprland.cachix.org" ];
-            trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+            substituters = [
+                "https://hyprland.cachix.org"
+                #"https://nix-community.cachix.org"
+            ];
+            trusted-public-keys = [
+                "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+                #"nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+            ];
+            trusted-users = [
+                "root" "${username}"
+            ];
         };
         gc = {
             automatic = true;

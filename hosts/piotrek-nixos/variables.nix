@@ -17,5 +17,6 @@
     monitor=, preferred, auto, 1
   '';
   waybar_scale = "1";
+  window_manager_cmd = "niri";
 }
 

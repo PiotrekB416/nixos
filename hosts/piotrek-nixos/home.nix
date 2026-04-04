@@ -8,11 +8,14 @@
   ...
 }:
 let
-    inherit (import ./variables.nix) gitUsername gitEmail;
+    inherit (import ./variables.nix) gitUsername gitEmail terminal;
 in
 {
     imports = [
         ../../config/hyprland/hyprland.nix
+        ../../config/hyprlock.nix
+        inputs.mango.hmModules.mango
+        ../../config/mango/mango.nix
         ../../config/niri/niri.nix
         ../../config/zellij.nix
         ../../config/emoji.nix
@@ -27,6 +30,10 @@ in
         ../../config/rofi/config-long.nix
         ../../config/swaync.nix
         ../../config/waybar.nix
+        ../../config/profile.nix
+        #inputs.caelestia-shell.homeManagerModules.default
+        inputs.dms-shell.homeModules.default
+        #inputs.noctalia.homeModules.default
     ];
     programs.home-manager.enable = true;
     # Home Manager Settings
@@ -41,6 +48,9 @@ in
         "/home/${username}/.local/bin"
         "/home/${username}/.cargo/bin"
     ];
+    home.sessionVariables = {
+        TERMINAL = "${terminal}";
+    };
 
     home.file.".config/swappy/config".text = ''
         [Default]
@@ -58,26 +68,19 @@ in
     stylix.targets.waybar.enable = false;
     stylix.targets.rofi.enable = false;
     stylix.targets.hyprland.enable = false;
+    stylix.targets.hyprlock.enable = false;
     stylix.targets.neovim.enable = false;
     stylix.targets.btop.enable = false;
-    stylix.targets.hyprlock.enable = false;
     stylix.targets.firefox.enable = false;
     stylix.targets.qt.enable = false;
-
-    programs.git = {
-        enable = true;
-        settings.user = {
-            name = "${gitUsername}";
-            email = "${gitEmail}";
-        };
-    };
-
-    programs.fastfetch.enable = true;
+    stylix.targets.dank-material-shell.enable = false;
+    #stylix.targets.alacritty.enable = false;
 
     xdg = {
         userDirs = {
             enable = true;
             createDirectories = true;
+            setSessionVariables = true;
         };
         systemDirs = {
             data = [
@@ -102,8 +105,11 @@ in
         gtk3.extraConfig = {
             gtk-application-prefer-dark-theme = 1;
         };
-        gtk4.extraConfig = {
+        gtk4 = {
+          theme = config.gtk.theme;
+          extraConfig = {
             gtk-application-prefer-dark-theme = 1;
+          };
         };
     };
     qt = {
@@ -112,28 +118,28 @@ in
         platformTheme.name = "gtk3";
     };
 
-    services = {
-        hypridle = {
-            settings = {
-                general = {
-                    after_sleep_cmd = "hyprctl dispatch dpms on";
-                    ignore_dbus_inhibit = false;
-                    lock_cmd = "hyprlock";
-                };
-                listener = [
-                  {
-                    timeout = 900;
-                    on-timeout = "hyprlock";
-                  }
-                  {
-                    timeout = 1200;
-                    on-timeout = "hyprctl dispatch dpms off";
-                    on-resume = "hyprctl dispatch dpms on";
-                  }
-                ];
-            };
-        };
-    };
+    # services = {
+    #     hypridle = {
+    #         settings = {
+    #             general = {
+    #                 after_sleep_cmd = "hyprctl dispatch dpms on";
+    #                 ignore_dbus_inhibit = false;
+    #                 lock_cmd = "hyprlock";
+    #             };
+    #             listener = [
+    #               {
+    #                 timeout = 900;
+    #                 on-timeout = "hyprlock";
+    #               }
+    #               {
+    #                 timeout = 1200;
+    #                 on-timeout = "hyprctl dispatch dpms off";
+    #                 on-resume = "hyprctl dispatch dpms on";
+    #               }
+    #             ];
+    #         };
+    #     };
+    # };
 
     programs = {
         alacritty = {
@@ -158,6 +164,7 @@ in
                 update_ms = 1000;
             };
         };
+        zathura.enable = true;
         wezterm = {
             enable = true;
             package = inputs.wezterm.packages.${pkgs.system}.default;
@@ -222,17 +229,66 @@ in
                 ".." = "cd ..";
                 nix-zellij = "nix develop --command \"fish\" \"-c\" \"launch-zellij --new-session-with-layout programming\"";
             };
+            loginShellInit = ''
+                fenv source ~/.profile
+            '';
             shellInitLast = ''
                 set fish_greeting
             '';
         };
+        git = {
+          enable = true;
+          settings.user = {
+            name = "${gitUsername}";
+            email = "${gitEmail}";
+          };
+          signing.format = "openpgp";
+        };
+
+        fastfetch.enable = true;
         hyprlock.enable = true;
         mpv = {
             enable = true;
             scripts = with pkgs.mpvScripts; [
                 mpris
             ];
+            config = {
+                target-colorspace-hint = "no";
+            };
         };
+        # caelestia = {
+        #     enable = false;
+        #     systemd = {
+        #         enable = true; # if you prefer starting from your compositor
+        #         target = "graphical-session.target";
+        #         environment = [];
+        #     };
+        #     # settings = {
+        #     #     # bar.status = {
+        #     #     #     showBattery = false;
+        #     #     # };
+        #     #     paths.wallpaperDir = "~/Pictures/Wallpapers";
+        #     # };
+        #     cli = {
+        #         enable = true; # Also add caelestia-cli to path
+        #         settings = {
+        #             theme.enableGtk = false;
+        #         };
+        #     };
+        # };
+
+        dank-material-shell = {
+            enable = true;
+            systemd = {
+                enable = true;
+            };
+        };
+        # noctalia-shell = {
+        #     enable = false;
+        #     systemd = {
+        #         enable = true;
+        #     };
+        # };
     };
 
     home.packages = [
