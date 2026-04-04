@@ -98,15 +98,15 @@ in
         ];
     };
     networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
-
+    networking.nftables.enable = true;
     networking.hostName = host;
     networking.firewall = {
         enable = true;
         allowedTCPPorts = [ 22 ];
-        extraCommands = ''
-            iptables -I OUTPUT 1 -m owner --gid-owner no-internet -j DROP
-            ip6tables -I OUTPUT 1 -m owner --gid-owner no-internet -j DROP
-        '';
+#        extraCommands = ''
+#            nft insert rule ip filter OUTPUT skgid 991 counter drop
+#            nft insert rule ip6 filter OUTPUT skgid 991 counter drop 
+#        '';
     };
 
     time.timeZone = "Europe/Warsaw";
@@ -319,6 +319,7 @@ in
         wget
         git
         libsForQt5.qt5ct
+        libsForQt5.qt5.qtwayland
         brightnessctl
         zip
         unzip
@@ -329,7 +330,7 @@ in
         rofi
         swaynotificationcenter
 
-        swww
+        awww
         eww
         dunst
         wl-clipboard
@@ -337,10 +338,15 @@ in
         kdePackages.dolphin
         kdePackages.qt6ct
         kdePackages.qt5compat
+        kdePackages.qtwayland
+        kdePackages.wayland
+        kdePackages.qtsvg
+        kdePackages.kio # needed since 25.11
+        kdePackages.kio-fuse #to mount remote filesystems via FUSE
+        kdePackages.kio-extras #extra protocols support (sftp, fish and more)
         jdk21
         nasm
 
-        wine64
         gcc
         gdb
         clang-tools
@@ -384,7 +390,9 @@ in
         zellij
         podman-compose docker-compose
         ripgrep
-	      wineWow64Packages.full winetricks
+        wineWow64Packages.stable
+        winetricks
+        wineWow64Packages.waylandFull
         qbittorrent-nox
         dialog
         freerdp
@@ -433,6 +441,7 @@ in
         linux-wallpaperengine
         xwayland-satellite
         fzf
+        fishPlugins.foreign-env
     ];
 
     services = {
@@ -569,6 +578,7 @@ in
                 setSocketVariable = true;
             };
         };
+        waydroid.enable = true;
     };
 
     console.keyMap = "${keyboardLayout}";

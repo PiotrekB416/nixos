@@ -76,20 +76,11 @@ in
     stylix.targets.dank-material-shell.enable = false;
     #stylix.targets.alacritty.enable = false;
 
-    programs.git = {
-        enable = true;
-        settings.user = {
-            name = "${gitUsername}";
-            email = "${gitEmail}";
-        };
-    };
-
-    programs.fastfetch.enable = true;
-
     xdg = {
         userDirs = {
             enable = true;
             createDirectories = true;
+            setSessionVariables = true;
         };
         systemDirs = {
             data = [
@@ -114,8 +105,11 @@ in
         gtk3.extraConfig = {
             gtk-application-prefer-dark-theme = 1;
         };
-        gtk4.extraConfig = {
+        gtk4 = {
+          theme = config.gtk.theme;
+          extraConfig = {
             gtk-application-prefer-dark-theme = 1;
+          };
         };
     };
     qt = {
@@ -212,10 +206,23 @@ in
                 ".." = "cd ..";
                 nix-zellij = "nix develop --command \"fish\" \"-c\" \"launch-zellij --new-session-with-layout programming\"";
             };
+            loginShellInit = ''
+                fenv source ~/.profile
+            '';
             shellInitLast = ''
                 set fish_greeting
             '';
         };
+        git = {
+          enable = true;
+          settings.user = {
+            name = "${gitUsername}";
+            email = "${gitEmail}";
+          };
+          signing.format = "openpgp";
+        };
+
+        fastfetch.enable = true;
         hyprlock.enable = true;
         mpv = {
             enable = true;

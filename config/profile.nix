@@ -12,11 +12,13 @@ let
 in
 with lib;
 {
-  home.file.".profile".text = ''
+  home.file.".profile"= {
+    text = ''
 #start window manager automatically
 if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
-  exec ${window_manager_cmd}
-  logout
+  exec ${window_manager_cmd} && exit
 fi
-  '';
+    '';
+    executable = true;
+  };
 }
