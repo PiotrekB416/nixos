@@ -393,7 +393,8 @@ in
         wineWow64Packages.stable
         winetricks
         wineWow64Packages.waylandFull
-        qbittorrent-nox
+        qbittorrent-nox 
+	jackett
         dialog
         freerdp
         iproute2
@@ -443,6 +444,14 @@ in
         fzf
         fishPlugins.foreign-env
     ];
+
+    nixpkgs.overlays = [
+    (_: prev: {
+      openldap = prev.openldap.overrideAttrs {
+        doCheck = !prev.stdenv.hostPlatform.isi686;
+      };
+    })
+  ];
 
     services = {
         getty = {

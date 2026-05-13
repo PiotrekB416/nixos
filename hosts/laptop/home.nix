@@ -130,6 +130,7 @@ in
             viAlias = true;
             vimAlias = true;
             defaultEditor = true;
+	    initLua = "require(\"config.lazy\")";
         };
         gh.enable = true;
         btop = {
