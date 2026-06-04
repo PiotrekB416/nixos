@@ -153,6 +153,9 @@ in
             viAlias = true;
             vimAlias = true;
             defaultEditor = true;
+            initLua = "require(\"config.lazy\")";
+            withRuby = true;
+            withPython3 = true;
         };
         gh.enable = true;
         btop = {
@@ -167,7 +170,7 @@ in
         zathura.enable = true;
         wezterm = {
             enable = true;
-            package = inputs.wezterm.packages.${pkgs.system}.default;
+            package = inputs.wezterm.packages.${pkgs.stdenv.hostPlatform.system}.default;
             extraConfig = ''
                 local wezterm = require 'wezterm'
                 local config = wezterm.config_builder()

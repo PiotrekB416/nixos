@@ -14,6 +14,6 @@
   terminal = "alacritty";#"wezterm"; # Set Default System Terminal
   keyboardLayout = "pl";
   waybar_scale = "1.5";
-  window_manager_cmd = "niri";
+  window_manager_cmd = "start-hyprland";
 }
 

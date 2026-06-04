@@ -354,7 +354,7 @@ in
         (python3.withPackages (ps: with ps; [
             pip
             materialyoucolor
-            aubio
+            aubio-ledfx
             sounddevice
             pyaudio
             numpy
@@ -389,6 +389,7 @@ in
         winetricks
         wineWow64Packages.waylandFull
         qbittorrent-nox
+        jackett 
         dialog
         freerdp
         iproute2
@@ -436,7 +437,17 @@ in
         xwayland-satellite
         fzf
         fishPlugins.foreign-env
+        hyprshutdown
     ];
+
+    nixpkgs.overlays = [
+    (_: prev: {
+      openldap = prev.openldap.overrideAttrs {
+        doCheck = !prev.stdenv.hostPlatform.isi686;
+      };
+    })
+  ];
+
 
     services = {
         getty.autologinUser = username;

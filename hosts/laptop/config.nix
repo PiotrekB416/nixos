@@ -359,7 +359,7 @@ in
         (python3.withPackages (ps: with ps; [
             pip
             materialyoucolor
-            aubio
+            aubio-ledfx
             sounddevice
             pyaudio
             numpy
@@ -415,7 +415,7 @@ in
         nodejs
         go
         kdePackages.plasma-workspace
-        inputs.quickshell.packages.${pkgs.system}.default
+        inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
         cliphist
         imagemagick
         fuzzel
@@ -443,6 +443,7 @@ in
         xwayland-satellite
         fzf
         fishPlugins.foreign-env
+        hyprshutdown
     ];
 
     nixpkgs.overlays = [
