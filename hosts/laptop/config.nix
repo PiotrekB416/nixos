@@ -98,6 +98,24 @@ in
         ];
     };
     networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
+    networking.nameservers = [
+      "45.90.28.0#laptop-ba7ac3.dns.nextdns.io"
+      "45.90.30.0#laptop-ba7ac3.dns.nextdns.io"
+      "1.1.1.1#one.one.one.one"
+      "1.0.0.1#one.one.one.one"
+    ];
+    services.resolved = {
+      enable = true;
+      dnssec = "true";
+      domains = [ "~." "local" ];
+      fallbackDns = [
+        "45.90.28.0#laptop-ba7ac3.dns.nextdns.io"
+        "45.90.30.0#laptop-ba7ac3.dns.nextdns.io"
+        "1.1.1.1#one.one.one.one"
+        "1.0.0.1#one.one.one.one"
+      ];
+      dnsovertls = "true";
+    };
     networking.nftables.enable = true;
     networking.hostName = host;
     networking.firewall = {
