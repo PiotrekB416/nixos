@@ -106,15 +106,17 @@ in
     ];
     services.resolved = {
       enable = true;
-      dnssec = "true";
-      domains = [ "~." "local" ];
-      fallbackDns = [
-        "45.90.28.0#laptop-ba7ac3.dns.nextdns.io"
-        "45.90.30.0#laptop-ba7ac3.dns.nextdns.io"
-        "1.1.1.1#one.one.one.one"
-        "1.0.0.1#one.one.one.one"
-      ];
-      dnsovertls = "true";
+      settings.Resolve = {
+        DNSSEC = "true";
+        Domains = [ "~." "local" ];
+        DNS = [
+          "45.90.28.0#laptop-ba7ac3.dns.nextdns.io"
+          "45.90.30.0#laptop-ba7ac3.dns.nextdns.io"
+          "1.1.1.1#one.one.one.one"
+          "1.0.0.1#one.one.one.one"
+        ];
+        DNSoverTLS = "true";
+      };
     };
     networking.nftables.enable = true;
     networking.hostName = host;
@@ -337,7 +339,7 @@ in
         wget
         git
         libsForQt5.qt5ct
-        libsForQt5.qt5.qtwayland
+        qt5.qtwayland
         brightnessctl
         zip
         unzip
@@ -423,7 +425,7 @@ in
         pkg-config
         openssl.dev
         starship
-        texlive.combined.scheme-medium
+        texliveMedium
         poppler poppler-utils
         typst
         tinymist

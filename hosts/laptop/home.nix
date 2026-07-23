@@ -64,6 +64,7 @@ in
     home.sessionVariables = {
         TERMINAL = "${terminal}";
     };
+    home.pointerCursor.enable = true;
 
     stylix.targets.waybar.enable = false;
     stylix.targets.rofi.enable = false;
@@ -106,7 +107,7 @@ in
             gtk-application-prefer-dark-theme = 1;
         };
         gtk4 = {
-          theme = config.gtk.theme;
+          #theme = config.gtk.theme;
           extraConfig = {
             gtk-application-prefer-dark-theme = 1;
           };
