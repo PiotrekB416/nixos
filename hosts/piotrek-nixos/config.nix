@@ -315,7 +315,7 @@ in
         wget
         git
         libsForQt5.qt5ct
-        libsForQt5.qt5.qtwayland
+        qt5.qtwayland
         brightnessctl
         zip
         unzip
@@ -340,6 +340,8 @@ in
         kdePackages.kio # needed since 25.11
         kdePackages.kio-fuse #to mount remote filesystems via FUSE
         kdePackages.kio-extras #extra protocols support (sftp, fish and more)
+        kdePackages.audiocd-kio
+        kdePackages.kio-admin
         jdk21
         nasm
 
@@ -541,6 +543,7 @@ in
             enable = true;
             powerOnBoot = true;
         };
+        sane.enable = true;
     };
 
     nix = {
