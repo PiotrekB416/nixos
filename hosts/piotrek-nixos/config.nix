@@ -440,6 +440,7 @@ in
         fzf
         fishPlugins.foreign-env
         hyprshutdown
+        usbutils
     ];
 
     nixpkgs.overlays = [
