@@ -25,11 +25,11 @@ in
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
 
- 	initrd.luks.devices."luks-e446b62d-f8c1-453c-9793-fee59cfd5e0c" = {
-		device = "/dev/disk/by-uuid/e446b62d-f8c1-453c-9793-fee59cfd5e0c";
-		preLVM = true;
-	};
-  	supportedFilesystems = [ "btrfs" ];
+ 	      initrd.luks.devices."luks-e446b62d-f8c1-453c-9793-fee59cfd5e0c" = {
+		      device = "/dev/disk/by-uuid/e446b62d-f8c1-453c-9793-fee59cfd5e0c";
+		      preLVM = true;
+	      };
+  	    supportedFilesystems = [ "btrfs" ];
 
         kernel.sysctl = {
             "vm.max_map_count" = 2147483642;
@@ -37,13 +37,19 @@ in
 
         kernelPackages = pkgs.linuxPackages_latest;
 
-        binfmt.registrations.appimage = {
+        binfmt = {
+          registrations.appimage = {
             wrapInterpreterInShell = false;
             interpreter = "${pkgs.appimage-run}/bin/appimage-run";
             recognitionType = "magic";
             offset = 0;
             mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
             magicOrExtension = ''\x7fELF....AI\x02'';
+          };
+          emulatedSystems = [
+            "aarch64-linux"
+            "riscv64-linux"
+          ];
         };
     };
 
