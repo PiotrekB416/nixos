@@ -25,6 +25,7 @@ in
                 "audio"
                 "input"
                 "uinput"
+                "dialout"
             ];
             shell = pkgs.fish;
             ignoreShellProgramCheck = true;

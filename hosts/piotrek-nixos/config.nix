@@ -31,13 +31,19 @@ in
 
         kernelPackages = pkgs.linuxPackages_latest;
 
-        binfmt.registrations.appimage = {
+        binfmt = {
+          registrations.appimage = {
             wrapInterpreterInShell = false;
             interpreter = "${pkgs.appimage-run}/bin/appimage-run";
             recognitionType = "magic";
             offset = 0;
             mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
             magicOrExtension = ''\x7fELF....AI\x02'';
+          };
+          emulatedSystems = [
+            "aarch64-linux"
+            "riscv64-linux"
+          ];
         };
     };
 
@@ -441,6 +447,7 @@ in
         fishPlugins.foreign-env
         hyprshutdown
         usbutils
+        arduino-ide
     ];
 
     nixpkgs.overlays = [

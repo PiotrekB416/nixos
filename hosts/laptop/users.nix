@@ -25,7 +25,7 @@ in
                 "audio"
                 "input"
                 "uinput"
-                "no-internet"
+                "dialout"
             ];
             shell = pkgs.fish;
             ignoreShellProgramCheck = true;

@@ -260,6 +260,7 @@ in
              libGL
              libappindicator-gtk3
              libdrm
+             libgbm
              libglvnd
              libnotify
              libpulseaudio
@@ -393,6 +394,7 @@ in
 
         android-studio
         android-tools
+        arduino-ide
 
         neovim
         eza
@@ -471,6 +473,7 @@ in
         fishPlugins.foreign-env
         hyprshutdown
         usbutils
+        libgbm
     ];
 
     nixpkgs.overlays = [
