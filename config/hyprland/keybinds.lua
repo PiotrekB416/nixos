@@ -36,10 +36,7 @@ hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ -5%"), { locked = true })
 
 hl.bind(MODIFIER .. " + D", hl.dsp.workspace.toggle_special("beeper"))
-hl.workspace_rule({
-	workspace = "special:beeper",
-	on_created_empty = "beeper",
-})
+
 hl.window_rule({
 	name = "Beeper workspace",
 	match = {
@@ -52,7 +49,17 @@ hl.window_rule({
 })
 
 hl.bind("CTRL + SHIFT + ESCAPE", hl.dsp.workspace.toggle_special("btop"))
-hl.workspace_rule({
-	workspace = "special:btop",
-	on_created_empty = "alacritty --class btop -e btop",
-})
+hl.on("workspace.created", function(ws)
+	local cases = {
+		["special:beeper"] = function()
+			hl.dispatch(hl.dsp.exec_cmd("beeper"))
+		end,
+		["special:btop"] = function()
+			hl.dispatch(hl.dsp.exec_cmd("alacritty --class btop -e btop"))
+		end,
+	}
+
+	if cases[ws.name] then
+		cases[ws.name]()
+	end
+end)

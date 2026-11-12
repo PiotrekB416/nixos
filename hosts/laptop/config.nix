@@ -27,7 +27,6 @@ in
 
  	      initrd.luks.devices."luks-e446b62d-f8c1-453c-9793-fee59cfd5e0c" = {
 		      device = "/dev/disk/by-uuid/e446b62d-f8c1-453c-9793-fee59cfd5e0c";
-		      preLVM = true;
 	      };
   	    supportedFilesystems = [ "btrfs" ];
 
